@@ -7,6 +7,7 @@
 	* running with:		./test
 	*
 	* Tested on Mac OS 10.8.2 
+	* Tested on Linux 3.2.0-29 
  */
 
 #include <stdio.h>
