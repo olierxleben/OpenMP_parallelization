@@ -34,3 +34,5 @@
 * Implementierung Algorithmus Y (2 S.)
   * Wie oben
 * Fazit (1 S.)
+	* Auswertung, Vergleich Laufzeiten der Algorithmen mit TBB evtl ??? 
+
