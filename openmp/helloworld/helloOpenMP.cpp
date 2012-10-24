@@ -5,6 +5,8 @@
 	*
 	* compiled with: 	g++ -fopenmp helloOpenMP.cpp -o test
 	* running with:		./test
+	*
+	* Tested on Mac OS 10.8.2 
  */
 
 #include <stdio.h>
