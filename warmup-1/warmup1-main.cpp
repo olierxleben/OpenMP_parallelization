@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <cstdio>
 
 #include "tbb/parallel_for.h"
 #include "tbb/blocked_range.h"
