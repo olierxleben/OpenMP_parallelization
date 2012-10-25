@@ -1,7 +1,7 @@
 UNAME = $(shell uname)
 
 ifeq ($(UNAME), Darwin)
-LIBS = ../tbb-4.1-osx/libtbb.so
+LIBS = ../tbb-4.1-osx/libtbb.dylib
 TARGET = warmup1-osx
 else
 LIBS = ../tbb-4.1-linux/libtbb.so
