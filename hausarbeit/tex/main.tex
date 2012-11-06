@@ -3,13 +3,15 @@
 \IfFileExists{latin1.sty}{\usepackage{latin1}}{\usepackage{isolatin1}}
 
 \usepackage{graphicx}
+% use of 
+\usepackage{minitoc}
 
 \author{
 	Martin Helmich, Oliver Erxleben \\ 
 	\\ 
 	Hochschule Osnabrück \\ 
 	Ingenieurswissenschaften und Informatik \\ 
-	Mobile und Verteilte Algorithmen \\ 
+	Informatik - Mobile und Verteilte Anwendungen \\ 
 	\\ 
 	martin.helmich@hs-osnabrueck.de \\
 	oliver.erxleben@hs-osnabrueck.de
@@ -27,15 +29,18 @@
 Es folgt ein kurzer Überblick über die Arbeit. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 \end{abstract}
 
-\section{Teil Martin Helmich}
+\section{OpenMP: Konzept}
 
 Dies ist ein Kapitel. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
 Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
+\subsection{Join-Fork-Modell}
+\subsection{}
+
 \pagebreak
 
-\section{Teil Oliver Erxleben}
+\section{Vergliech mit TBB und anderen?!}
 
 Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
@@ -62,8 +67,30 @@ https://computing.llnl.gov/tutorials/openMP/ \\
 http://www.people.westminstercollege.edu/faculty/ggagne/fall2012/306/handouts/parallel/index.html \\
 http://www.openmp.org/mp-documents/OpenMP3.1.pdf \\
 
-
-
 \bibliography{lib/lnitemplate}
+
+\newpage
+
+\listoffigures
+
+\listoftables
+
+% Literaturverzeichnis
+\begin{appendix}
+\input{chapters/literaturverzeichnis}
+\input{chapters/anlagenverzeichnis}
+\end{appendix}
+
+
+\section{Anlagen}
+\pagenumbering{none}
+\setcounter{subsection}{0} %clear counter 
+\minitoc
+
+\nomtcpagenumbers{undotted} % TODO: the dots remain in eternity... 
+
+\subsection{testkapitel 1}
+
+\subsection{testkapitel 2}
 
 \end{document}
