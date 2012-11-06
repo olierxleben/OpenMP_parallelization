@@ -6,6 +6,10 @@
 % use of 
 \usepackage{minitoc}
 
+% add bibliography to toc
+\usepackage[nottoc]{tocbibind}
+
+\begin{document}
 \author{
 	Martin Helmich, Oliver Erxleben \\ 
 	\\ 
@@ -16,17 +20,17 @@
 	martin.helmich@hs-osnabrueck.de \\
 	oliver.erxleben@hs-osnabrueck.de
 }
+
 \title{OpenMP [Working DRAFT]}
-\begin{document}
+
 \maketitle
 
 \tableofcontents
 
-
 \pagebreak % new page after toc
 
 \begin{abstract}
-Es folgt ein kurzer Überblick über die Arbeit. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
+Die vorliegende Hausarbeit wurde in LateX verfasst und ist eine gemeinsame Arbeit von Martin Helmich und Oliver Erxleben. Das Thema der Arbeit ist die konzeptionelle und technische Betrachtung des Einsatzes von OpenMP zur Entwicklung von parallelen Programmen. TODO: Cliffhanger
 \end{abstract}
 
 \section{OpenMP: Konzept}
@@ -36,11 +40,12 @@ Dies ist ein Kapitel. Text Text Text Text Text Text Text Text Text Text Text Tex
 Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
 \subsection{Join-Fork-Modell}
-\subsection{}
+\subsubsection{Programmbeispiel}
+\subsection{Vor- und Nachteile}
 
 \pagebreak
 
-\section{Vergliech mit TBB und anderen?!}
+\section{Vergleich mit TBB und anderen?!}
 
 Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
@@ -60,13 +65,7 @@ Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text 
 Text mit Fußnote.\footnote{Dies ist eine Fußnote. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.} Text \cite{Ez99,ABC01} Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
 \pagebreak
-
-\section{Working Notes}
-Links: 
-https://computing.llnl.gov/tutorials/openMP/ \\
-http://www.people.westminstercollege.edu/faculty/ggagne/fall2012/306/handouts/parallel/index.html \\
-http://www.openmp.org/mp-documents/OpenMP3.1.pdf \\
-
+\bibliographystyle{plain}
 \bibliography{lib/lnitemplate}
 
 \newpage
@@ -75,22 +74,23 @@ http://www.openmp.org/mp-documents/OpenMP3.1.pdf \\
 
 \listoftables
 
-% Literaturverzeichnis
-\begin{appendix}
-\input{chapters/literaturverzeichnis}
-\input{chapters/anlagenverzeichnis}
-\end{appendix}
-
-
 \section{Anlagen}
 \pagenumbering{none}
 \setcounter{subsection}{0} %clear counter 
 \minitoc
 
-\nomtcpagenumbers{undotted} % TODO: the dots remain in eternity... 
+\nomtcpagenumbers % TODO: the dots remain in eternity... 
 
-\subsection{testkapitel 1}
+\subsection{Source Code}
 
-\subsection{testkapitel 2}
+\subsection{Latex Dateien}
+
+
+% Vor Abgabe raus!!!! 
+\subsection{Working Notes}
+Links: 
+https://computing.llnl.gov/tutorials/openMP/ \\
+http://www.people.westminstercollege.edu/faculty/ggagne/fall2012/306/handouts/parallel/index.html \\
+http://www.openmp.org/mp-documents/OpenMP3.1.pdf \\
 
 \end{document}
