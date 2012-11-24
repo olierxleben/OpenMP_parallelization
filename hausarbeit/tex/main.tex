@@ -26,24 +26,19 @@
 \maketitle
 
 \tableofcontents
-
-\pagebreak % new page after toc
-
 \begin{abstract}
 Die vorliegende Hausarbeit wurde in LateX verfasst und ist eine gemeinsame Arbeit von Martin Helmich und Oliver Erxleben. Das Thema der Arbeit ist die konzeptionelle und technische Betrachtung des Einsatzes von OpenMP zur Entwicklung von parallelen Programmen. TODO: Cliffhanger
 \end{abstract}
 
+\pagebreak % new page after toc and abstract
+
+\setcounter{page}{1} % the real document begins here, so set page number to 1
 \section{OpenMP: Konzept}
-
-Dies ist ein Kapitel. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
-
-Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
+\cite{omp08}
 
 \subsection{Join-Fork-Modell}
 \subsubsection{Programmbeispiel}
 \subsection{Vor- und Nachteile}
-
-\pagebreak
 
 \section{Vergleich mit TBB und anderen?!}
 
@@ -65,8 +60,9 @@ Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text 
 Text mit Fußnote.\footnote{Dies ist eine Fußnote. Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.} Text \cite{Ez99,ABC01} Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
 \pagebreak
+
+\bibliography{lib/references}{}
 \bibliographystyle{plain}
-\bibliography{lib/lnitemplate}
 
 \newpage
 
