@@ -4,6 +4,8 @@
 
 \usepackage{graphicx}
 \usepackage{minitoc}
+\usepackage[ngerman]{babel}
+\usepackage[ansinew]{inputenc}
 
 % add bibliography to toc
 \usepackage[nottoc]{tocbibind}
@@ -27,19 +29,37 @@
 
 \tableofcontents
 \begin{abstract}
-Die vorliegende Hausarbeit ist eine gemeinsame Arbeit von Martin Helmich und Oliver Erxleben für das Modul \textit{Parallele und Verteilte Algorithmen} im Wintersemester 2012/13 an der Hochschule Osnabrück. Das Thema der Arbeit Betrachtung von OpenMP zur Parallelisierung von Programmen. \\ 
-Die Arbeit gliedert sich in die konzeptionelle Betrachtung und kritische Würdigung von OpenMP und den Vergleich mit der im Modul kennengelernten Programmier- \\ bibliothek Threading Building Blocks von Intel. \\
+Die vorliegende Hausarbeit ist eine gemeinsame Arbeit von Martin Helmich und Oliver Erxleben für das Modul \textit{Parallele und Verteilte Algorithmen} im Wintersemester 2012/13 an der Hochschule Osnabrück. Das Thema der Arbeit ist die Betrachtung von OpenMP zur Parallelisierung von Programmen. \\ 
+Die Arbeit gliedert sich in die konzeptionelle Betrachtung und kritische Würdigung von OpenMP und den Vergleich mit der im Modul kennengelernten Programmierbibliothek Threading Building Blocks von Intel. \\
 Desweiteren wird die Aufgabe aus Intel`s \textit{Accelerate your Code} - Programmierwettbewerb von Herbst 2012 mittels OpenMP reimplementiert.
 \end{abstract}
 
 \pagebreak % new page after toc and abstract
 
 \setcounter{page}{1} % the real document begins here, so set page number to 1
-\section{OpenMP: Konzept}
+\section{OpenMP}
+Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle für die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den Versionsstand 3.1 erreicht hat, ist ein portables und zugleich paralleles Programmiermodell für Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verfügung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert. (Vgl. \cite{omp08} Kapitel 1: Einführung)
 
-\subsection{Join-Fork-Modell}
-\subsubsection{Programmbeispiel}
-\subsection{Vor- und Nachteile}
+\subsection{Merkmale von OpenMP}
+Hoher Abstraktionsgrad \\
+Portabilität \\
+Schrittweise Parallelisierung \\
+herstellerübergreifender Standard
+
+\subsection{Ausführungsmodell}
+Die parallele Ausführung erfolgt durch Threads auf dem Fork/Join\footnote{Fork/Join:}-Ausführungsmodell. 
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=1.0\textwidth]{img/fork_join.png}
+   \caption{Fork-Join-Prinzip}
+\end{figure}
+
+\subsection{Parallele Schleifen}
+\subsection{Synchronisation}
+\subsection{Abschnitte und Aufgaben}
+
+\pagebreak % first part ends
 
 \section{Vergleich mit TBB und anderen?!}
 
