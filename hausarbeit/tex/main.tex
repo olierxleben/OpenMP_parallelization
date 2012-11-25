@@ -38,7 +38,9 @@ Desweiteren wird die Aufgabe aus Intel`s \textit{Accelerate your Code} - Program
 
 \setcounter{page}{1} % the real document begins here, so set page number to 1
 \section{OpenMP}
-Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle für die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den Versionsstand 3.1 erreicht hat, ist ein portables und zugleich paralleles Programmiermodell für Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verfügung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert. (Vgl. \cite{omp08} Kapitel 1: Einführung)
+Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle für die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles Programmiermodell für Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verfügung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert. (Vgl. \cite{omp08} Kapitel 1: Einführung)
+\\
+Compilerdirektiven
 
 \subsection{Merkmale von OpenMP}
 Hoher Abstraktionsgrad \\
@@ -47,12 +49,15 @@ Schrittweise Parallelisierung \\
 herstellerübergreifender Standard
 
 \subsection{Ausführungsmodell}
-Die parallele Ausführung erfolgt durch Threads auf dem Fork/Join\footnote{Fork/Join:}-Ausführungsmodell. 
+Die parallele Ausführung erfolgt durch Threads auf dem Fork-/Join\footnote{Fork/Join:}-Ausführungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausführung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die Ausführung in Threads auf. Die erstellten Threads werden als \textit{team of threads} bezeichnet\footnote{Die Implementierung von OpenMP entscheidet über die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein.}. Für OpenMP, bzw. der Entwicklung mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar.  \\ 
+Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem das team of threads auf alle Teammitglieder wartet. Die Abbildung \ref{Join-Fork-Modell} stellt einen möglichen Ablauf mit OpenMP dar. 
 
 \begin{figure}[h!]
   \centering
     \includegraphics[width=1.0\textwidth]{img/fork_join.png}
+    \label{Join-Fork-Modell}
    \caption{Fork-Join-Prinzip}
+   \protect{\textit{Entnommen aus OpenMP Tutorial} (\cite{openmptut})}
 \end{figure}
 
 \subsection{Parallele Schleifen}
