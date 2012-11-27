@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <omp.h>
 
-#define NUM_PROCESSORS 5
+#define NUM_PROCESSORS 2
 
 int main(int argc, char *argv[])
 {	
