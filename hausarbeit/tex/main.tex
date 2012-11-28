@@ -1,20 +1,15 @@
 %
 % 
-%
-% Vor Abgabe raus!!!! 
-%Links: 
-%https://computing.llnl.gov/tutorials/openMP/ \\
-%http://www.people.westminstercollege.edu/faculty/ggagne/fall2012/306/handouts/parallel/index.html \\
-%http://www.openmp.org/mp-documents/OpenMP3.1.pdf \\
 
 \documentclass{lni}
 
 %\IfFileExists{latin1.sty}{\usepackage{latin1}}{\usepackage{isolatin1}}
 
+\usepackage[a4paper, left=3cm, right=3cm, top=2cm]{geometry}
 \usepackage{graphicx}
-\usepackage{minitoc}
-\usepackage[ngerman]{babel}
-\usepackage[utf-8]{inputenc}
+%\usepackage{minitoc}
+%\usepackage[ngerman]{babel}
+%\usepackage[isolatin1]{inputenc}
 
 % add bibliography to toc
 \usepackage[nottoc]{tocbibind}
@@ -24,6 +19,12 @@
 
 \def\abstractname{Kurzfassung}
 
+% no dots in toc
+\makeatletter
+\renewcommand{\@dotsep}{10000} 
+\makeatother
+
+% Document begins
 \begin{document}
 
 \author{
@@ -42,6 +43,8 @@
 \maketitle
 
 \tableofcontents
+
+\pagebreak
 \begin{abstract}
 Die Parallelisierung von Anwendungen ist (CLIFFHANGAR)\\
 Die vorliegende Hausarbeit ist eine gemeinsame Arbeit von Martin Helmich und Oliver Erxleben für das Modul \textit{Parallele und Verteilte Algorithmen} im Wintersemester 2012/13 an der Hochschule Osnabrück. Das Thema der Arbeit ist die Betrachtung von OpenMP zur Parallelisierung von Programmen. \\ 
@@ -114,7 +117,7 @@ Text mit Fußnote.\footnote{Dies ist eine Fußnote. Text Text Text Text Text Tex
 \section{Anlagen}
 \pagenumbering{none}
 \setcounter{subsection}{0} %clear counter 
-\minitoc
+%\minitoc
 
 %\nomtcpagenumbers % TODO: the dots remain in eternity... 
 
