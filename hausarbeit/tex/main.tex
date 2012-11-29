@@ -1,21 +1,13 @@
 %
 % 
 %
-% Vor Abgabe raus!!!! 
-%Links: 
-%https://computing.llnl.gov/tutorials/openMP/ \\
-%http://www.people.westminstercollege.edu/faculty/ggagne/fall2012/306/handouts/parallel/index.html \\
-%http://www.openmp.org/mp-documents/OpenMP3.1.pdf \\
+\documentclass{lni}
 
-\documentclass{scrartcl}
-\let\ifpdf\relax
-
-%\IfFileExists{latin1.sty}{\usepackage{latin1}}{\usepackage{isolatin1}}
-
+\usepackage[a4paper, left=3cm, right=3cm, top=2cm]{geometry}
 \usepackage{graphicx}
-\usepackage{minitoc}
 \usepackage[ngerman]{babel}
-\usepackage[utf8]{inputenc}
+%\usepackage[]{inputenc}
+\usepackage[T1]{fontenc}
 
 % add bibliography to toc
 \usepackage[nottoc]{tocbibind}
@@ -25,12 +17,18 @@
 
 \def\abstractname{Kurzfassung}
 
+% no dots in toc
+\makeatletter
+\renewcommand{\@dotsep}{10000} 
+\makeatother
+
+% Document begins
 \begin{document}
 
 \author{
 	Martin Helmich, Oliver Erxleben \\ 
 	\\ 
-	Hochschule Osnabrück \\ 
+	Hochschule Osnabr"uck \\ 
 	Ingenieurswissenschaften und Informatik \\ 
 	Informatik - Mobile und Verteilte Anwendungen \\ 
 	\\ 
@@ -43,10 +41,12 @@
 \maketitle
 
 \tableofcontents
+
+\pagebreak
 \begin{abstract}
 Die Parallelisierung von Anwendungen ist (CLIFFHANGAR)\\
-Die vorliegende Hausarbeit ist eine gemeinsame Arbeit von Martin Helmich und Oliver Erxleben für das Modul \textit{Parallele und Verteilte Algorithmen} im Wintersemester 2012/13 an der Hochschule Osnabrück. Das Thema der Arbeit ist die Betrachtung von OpenMP zur Parallelisierung von Programmen. \\ 
-Die Arbeit gliedert sich in die konzeptionelle Betrachtung und kritische Würdigung von OpenMP und den Vergleich mit der im Modul kennengelernten Programmierbibliothek Threading Building Blocks von Intel. \\
+Die vorliegende Hausarbeit ist eine gemeinsame Arbeit von Martin Helmich und Oliver Erxleben f"ur das Modul \textit{Parallele und Verteilte Algorithmen} im Wintersemester 2012/13 an der Hochschule Osnabr"uck. Das Thema der Arbeit ist die Betrachtung von OpenMP zur Parallelisierung von Programmen. \\ 
+Die Arbeit gliedert sich in die konzeptionelle Betrachtung und kritische W"urdigung von OpenMP und den Vergleich mit der im Modul kennengelernten Programmierbibliothek Threading Building Blocks von Intel. \\
 Desweiteren wird die Aufgabe aus Intel`s \textit{Accelerate your Code} - Programmierwettbewerb von Herbst 2012 mittels OpenMP reimplementiert.
 \end{abstract}
 
@@ -54,16 +54,16 @@ Desweiteren wird die Aufgabe aus Intel`s \textit{Accelerate your Code} - Program
 
 \setcounter{page}{1} % the real document begins here, so set page number to 1
 \section{OpenMP}
-Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle für die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles Programmiermodell für Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verfügung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert. (Vgl. \cite{omp08} Kapitel 1: Einführung) \\
-Ein weiteres Plus für den Einsatz von OpenMP ist die weite Verbreitung von Multi-Core-Rechnern und die Implementierung in vielen verbreiteten Compilern. So ist OpenMP im GCC seit der Version 4.2, im Visual Studio C/C++ Compiler seit der Version 2005 oder im Intel C/C++-Compiler seit Version 8 verfügbar. Compiler die keine OpenMP-Unterstützung bieten, ignorieren aufgrund der Pragma-Compilerdirektiven die Ausführung als parallelisierte OpenMP-Implementierung, was zu einer guten Portabilität führt. Die Hauptaufgabe von OpenMP ist jedoch die Parallelisierung von Schleifen, nachfolgend ein Beispiel: \\
+Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles Programmiermodell f"ur Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verf"ugung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert. (Vgl. \cite{omp08} Kapitel 1: Einf"uhrung) \\
+Ein weiteres Plus f"ur den Einsatz von OpenMP ist die weite Verbreitung von Multi-Core-Rechnern und die Implementierung in vielen verbreiteten Compilern. So ist OpenMP im GCC seit der Version 4.2, im Visual Studio C/C++ Compiler seit der Version 2005 oder im Intel C/C++-Compiler seit Version 8 verf"ugbar. Compiler die keine OpenMP-Unterst"utzung bieten, ignorieren aufgrund der Pragma-Compilerdirektiven die Ausf"uhrung als parallelisierte OpenMP-Implementierung, was zu einer guten Portabilität f"uhrt. Die Hauptaufgabe von OpenMP ist jedoch die Parallelisierung von Schleifen, nachfolgend ein Beispiel: \\
 
 
 \subsection{Merkmale von OpenMP}
 
-Mit OpenMP wird ein hoher \textbf{Abstraktionsgrad} erreicht, da Threads nicht durch einen Programmierer initialisiert, gestartet oder beenden werden müssen. Wie bereits in der Einführung erwähnt, beitet OpenMP eine gute \textbf{Portabilität} des Programms an, zum einen ist OpenMP in vielen Mainstream-Compilern implementiert, zum anderen können Compiler ohne OpenMP-Unterstützung das Programm ohne Veränderung kompilieren, da die Compilerdirektiven durch Pragmas eingesetzt und ignoriert werden können. Auch bleibt der sequenzielle Programmcode vollständig erhalten, wenn nicht mittels OpenMP kompiliert wird. Der Quelltext kann somit \textbf{Schrittweise parallelisiert} werden. \\
+Mit OpenMP wird ein hoher \textbf{Abstraktionsgrad} erreicht, da Threads nicht durch einen Programmierer initialisiert, gestartet oder beenden werden m"ussen. Wie bereits in der Einf"uhrung erwähnt, beitet OpenMP eine gute \textbf{Portabilität} des Programms an, zum einen ist OpenMP in vielen Mainstream-Compilern implementiert, zum anderen können Compiler ohne OpenMP-Unterst"utzung das Programm ohne Veränderung kompilieren, da die Compilerdirektiven durch Pragmas eingesetzt und ignoriert werden können. Auch bleibt der sequenzielle Programmcode vollständig erhalten, wenn nicht mittels OpenMP kompiliert wird. Der Quelltext kann somit \textbf{Schrittweise parallelisiert} werden. \\
 
-\subsection{Ausführungsmodell}
-Die parallele Ausführung erfolgt durch Threads auf dem Fork-/Join\footnote{Fork/Join:}-Ausführungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausführung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die Ausführung in Threads auf. Die erstellten Threads werden als \textit{team of threads} bezeichnet\footnote{Die Implementierung von OpenMP entscheidet über die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein.}. Für OpenMP, bzw. der Entwicklung mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar.  \\ 
+\subsection{Ausfhrungsmodell}
+Die parallele Ausf"uhrung erfolgt durch Threads auf dem Fork-/Join\footnote{Fork/Join:}-Ausf"uhrungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausf"uhrung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die Ausf"uhrung in Threads auf. Die erstellten Threads werden als \textit{team of threads} bezeichnet\footnote{Die Implementierung von OpenMP entscheidet "uber die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein.}. F"ur OpenMP, bzw. der Entwicklung mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar.  \\ 
 Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem das team of threads auf alle Teammitglieder wartet. Die Abbildung \ref{Join-Fork-Modell} stellt einen möglichen Ablauf mit OpenMP dar. 
 
 \begin{figure}[h!]
@@ -86,7 +86,7 @@ Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem 
 
 Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
-\subsection{Unterkapitelüberschrift}
+\subsection{Unterkapitel"uberschrift}
 
 Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
@@ -115,7 +115,7 @@ Text mit Fußnote.\footnote{Dies ist eine Fußnote. Text Text Text Text Text Tex
 \section{Anlagen}
 \pagenumbering{none}
 \setcounter{subsection}{0} %clear counter 
-\minitoc
+%\minitoc
 
 %\nomtcpagenumbers % TODO: the dots remain in eternity... 
 
