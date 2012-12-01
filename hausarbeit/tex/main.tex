@@ -1,6 +1,12 @@
-\documentclass[a4paper,11pt]{scrartcl}
+\documentclass[11pt]{scrartcl}
 
-\usepackage[ngerman]{babel} \usepackage[utf8]{inputenc} \usepackage{graphicx}
+% own geometry
+\usepackage[a4paper, left=3cm, right=3cm]{geometry}
+
+\usepackage[ngerman]{babel} 
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
 
 \begin{document}
 
@@ -12,11 +18,12 @@ Ingenieurswissenschaften und Informatik \\ Informatik - Mobile und Verteilte Anw
 OpenMP [Working DRAFT]}
 
 \maketitle
-
+\thispagestyle{empty}
 \tableofcontents
 
 \pagebreak
-
+\pagestyle{plain}
+\setcounter{page}{1}
 \section{OpenMP} Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle
 f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und
 Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den
@@ -69,8 +76,6 @@ möglichen Ablauf mit OpenMP dar.
 \protect{\textit{Entnommen aus OpenMP Tutorial} (siehe \cite{openmptut})}
 \end{figure}
 
-
-
 \subsection{Parallele Schleifen} \subsection{Synchronisation} \subsection{Abschnitte und
 Aufgaben}
 
@@ -103,5 +108,16 @@ Text Text Text Text Text Text Text Text  Text Text Text Text Text Text Text Text
 Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text
 Text Text Text Text Text Text Text Text Text Text Text Text Text.
 
+\pagebreak
+\thispagestyle{empty}
+\listoffigures
+
+\listoftables
+
+\begin{thebibliography}{3}
+	\bibitem{omp08} S. Hoffmann, R. Lienhart: OpenMP - Eine Einf{\"u}hrung in die parallele Programmierung in C/C++
+	
+	\bibitem{openmptut} Blaise Barney, Lawrence Livermore National Laboratory: OpenMP Tutorial \\ https://computing.llnl.gov/tutorials/openMP/ \\ \textit{abgerufen am 24.11.2012}
+\end{thebibliography}
 
 \end{document}
