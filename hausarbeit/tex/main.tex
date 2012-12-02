@@ -8,6 +8,47 @@
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 
+% setup of source code listings
+\usepackage{listings}
+\usepackage{courier}
+\lstset{
+	basicstyle=\footnotesize\ttfamily,	% default font
+	%numbers=left,						% line numbers placement
+	numberstyle=\tiny,					% line numbers style
+	%stepnumber=2,						% line number padding
+	numbersep=5pt,						% padding between line numbers and code
+	tabsize=2,							% 
+	extendedchars=true,         
+	breaklines=true,						% line breaks 
+	keywordstyle=\color{red},
+	frame=b,
+	stringstyle=\color{white}\ttfamily,	% color of strings in code
+	showspaces=false,					% visualize spaces
+    showtabs=false,						% visualize tabs
+    xleftmargin=17pt,
+	framexleftmargin=17pt,
+	framexrightmargin=5pt,
+	framexbottommargin=4pt,
+	showstringspaces=false				% visualize spaces in strings        
+ }
+ 
+ \lstloadlanguages{% Check docs for further languages ...
+         C,
+         C++
+ }
+
+%\captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
+\usepackage{caption}
+
+\DeclareCaptionFont{white}{\color{white}}
+
+% layout the box
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01 {\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+
+% layout the caption ontop of code
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+
+% Document begins now
 \begin{document}
 
 \author{ Martin Helmich, Oliver Erxleben \\ \\ Hochschule Osnabr"uck \\
