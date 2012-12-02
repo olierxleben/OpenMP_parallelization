@@ -25,48 +25,21 @@ OpenMP [Working DRAFT]}
 \pagestyle{plain}
 \setcounter{page}{1}
 \section{OpenMP} Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle
-f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und
-Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den
+f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den
 Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles
-Programmiermodell f"ur Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: }
-zur Verf"ugung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und
-Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von
-Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele
-Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im
-Vergleich zu anderen alternativen Ansätzen stark verbessert. (Vgl. \cite{omp08} Kapitel 1:
-Einf"uhrung) \\ Ein weiteres Plus f"ur den Einsatz von OpenMP ist die weite Verbreitung
-von Multi-Core-Rechnern und die Implementierung in vielen verbreiteten Compilern. So ist
-OpenMP im GCC seit der Version 4.2, im Visual Studio C/C++ Compiler seit der Version 2005
-oder im Intel C/C++-Compiler seit Version 8 verf"ugbar. Compiler die keine
-OpenMP-Unterst"utzung bieten, ignorieren aufgrund der Pragma-Compilerdirektiven die
-Ausf"uhrung als parallelisierte OpenMP-Implementierung, was zu einer guten Portabilität
-f"uhrt. Die Hauptaufgabe von OpenMP ist jedoch die Parallelisierung von Schleifen,
-nachfolgend ein Beispiel: \\
-
+Programmiermodell f"ur Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verf"ugung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert. \textit{(Vgl. \cite{omp08} Kapitel 1: Einf"uhrung)} \\ Ein weiteres Plus f"ur den Einsatz von OpenMP ist die weite Verbreitung von Multi-Core-Rechnern und die Implementierung in vielen verbreiteten Compilern. So ist OpenMP im GCC seit der Version 4.2, im Visual Studio C/C++ Compiler seit der Version 2005 oder im Intel C/C++-Compiler seit Version 8 verf"ugbar. Compiler die keine OpenMP-Unterst"utzung bieten, ignorieren aufgrund der Pragma-Compilerdirektiven die Ausf"uhrung als parallelisierte OpenMP-Implementierung, was zu einer guten Portabilität f"uhrt. \\
+Ursprünglich wurde OpenMP für den Bereich High Performance Computing entwickelt, wo Programmcode meist viele Schleifen enthält. Demnach ist die Parallelisierung von Schleifen die Hauptaufgabe von OpenMP und die meisten Vorteile können an dieser Stelle von OpenMP aufgezeigt werden. 
+% TODO: Beispiel einfügen??
 
 \subsection{Merkmale von OpenMP}
 
-Mit OpenMP wird ein hoher \textbf{Abstraktionsgrad} erreicht, da Threads nicht durch einen
-Programmierer initialisiert, gestartet oder beenden werden m"ussen. Wie bereits in der
-Einf"uhrung erwähnt, beitet OpenMP eine gute \textbf{Portabilität} des Programms an, zum
-einen ist OpenMP in vielen Mainstream-Compilern implementiert, zum anderen können Compiler
-ohne OpenMP-Unterst"utzung das Programm ohne Veränderung kompilieren, da die
-Compilerdirektiven durch Pragmas eingesetzt und ignoriert werden können. Auch bleibt der
-sequenzielle Programmcode vollständig erhalten, wenn nicht mittels OpenMP kompiliert wird.
-Der Quelltext kann somit \textbf{Schrittweise parallelisiert} werden. \\
+Mit OpenMP wird ein hoher \textbf{Abstraktionsgrad} erreicht, da Threads nicht durch einen Programmierer initialisiert, gestartet oder beenden werden m"ussen. Wie bereits in der Einf"uhrung erwähnt, beitet OpenMP eine gute \textbf{Portabilität} des Programms an, zum einen ist OpenMP in vielen Mainstream-Compilern implementiert, zum anderen können Compiler ohne OpenMP-Unterst"utzung das Programm ohne Veränderung kompilieren, da die Compilerdirektiven durch Pragmas eingesetzt und ignoriert werden können. Auch bleibt der sequenzielle Programmcode vollständig erhalten, wenn nicht mittels OpenMP kompiliert wird. Der Quelltext kann somit \textbf{Schrittweise parallelisiert} werden. 
 
-\subsection{Ausfhrungsmodell} Die parallele Ausf"uhrung erfolgt durch Threads auf dem
-Fork-/Join\footnote{Fork/Join:}-Ausf"uhrungsmodell. Zu Beginn eines Programms ist nur ein
-Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausf"uhrung die
-Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die
+\subsection{Ausführungsmodell} Die parallele Ausf"uhrung erfolgt durch Threads auf dem
+Fork-/Join\footnote{Fork/Join:}-Ausf"uhrungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausf"uhrung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die
 Ausf"uhrung in Threads auf. Die erstellten Threads werden als \textit{team of threads}
-bezeichnet\footnote{Die Implementierung von OpenMP entscheidet "uber die Art der Threads
-die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch
-als vollwertige Shared-Memory-Prozesse umgesetzt sein.}. F"ur OpenMP, bzw. der Entwicklung
-mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar.  \\ Die
-schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem das team of
-threads auf alle Teammitglieder wartet. Die Abbildung \ref{Join-Fork-Modell} stellt einen
-möglichen Ablauf mit OpenMP dar.
+bezeichnet\footnote{Die Implementierung von OpenMP entscheidet "uber die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein.}. F"ur OpenMP, bzw. der Entwicklung mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar. \\ 
+Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem das team of threads auf alle Teammitglieder wartet. Die Abbildung \ref{Join-Fork-Modell} stellt einen möglichen Ablauf mit OpenMP dar.
 
 \begin{figure}[h!]
 \centering
@@ -76,8 +49,14 @@ möglichen Ablauf mit OpenMP dar.
 \protect{\textit{Entnommen aus OpenMP Tutorial} (siehe \cite{openmptut})}
 \end{figure}
 
-\subsection{Parallele Schleifen} \subsection{Synchronisation} \subsection{Abschnitte und
-Aufgaben}
+\subsection{Parallelisierung von Schleifen} 
+Nach Flynn`scher Klassifikation kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. \textit{(Vgl. siehe \cite{omp08}, Kapitel 3.1: Parallelität auf Schleifenebene)} \\
+Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration, was bedeutet das anstatt die Arbeit in einer Schleife aufzuteilen die Arbeit auf jedem Thread komplett für sich abgearbeitet wird. 
+
+
+\subsection{Synchronisation} 
+
+\subsection{Abschnitte und Aufgaben}
 
 \pagebreak % first part ends
 
