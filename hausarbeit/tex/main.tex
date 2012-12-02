@@ -7,13 +7,16 @@
 \usepackage[utf8]{inputenc} 
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
 
 % setup of source code listings
 \usepackage{listings}
 \usepackage{courier}
+\usepackage{caption}
 \lstset{
 	basicstyle=\footnotesize\ttfamily,	% default font
-	%numbers=left,						% line numbers placement
+	numbers=left,						% line numbers placement
 	numberstyle=\tiny,					% line numbers style
 	%stepnumber=2,						% line number padding
 	numbersep=5pt,						% padding between line numbers and code
@@ -38,12 +41,13 @@
  }
 
 %\captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
-\usepackage{caption}
 
 \DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
 % layout the box
-\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01 {\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+%\DeclareCaptionFormat{listing}{\colorbox[rgb]{0.43, 0.35, 0.35 {\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
 
 % layout the caption ontop of code
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
@@ -93,8 +97,8 @@ Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem 
 \subsection{Parallelisierung von Schleifen} 
 Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\textit{(Vgl. siehe \cite{omp08}, Kapitel 3.1: Parallelität auf Schleifenebene)} \\
 Ein team of threads wird mittels \textit{\#pragma omp parallel} gestartet. Zur Veranschaulichung sei folgendes Beispiel gegeben: 
-%oder \textit{\#pragma omp parallel for}
 
+\lstinputlisting[caption=parallel, label=Beispiel Parallel]{../src/1_3_example/parallel.c}
 
 \subsection{Synchronisation} 
 
@@ -134,6 +138,8 @@ Text Text Text Text Text Text Text Text Text Text Text Text Text.
 \listoffigures
 
 \listoftables
+
+\lstlistoflistings
 
 \begin{thebibliography}{3}
 	\bibitem{omp08} S. Hoffmann, R. Lienhart: OpenMP - Eine Einf{\"u}hrung in die parallele Programmierung in C/C++
