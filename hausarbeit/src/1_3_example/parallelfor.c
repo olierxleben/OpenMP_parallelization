@@ -3,10 +3,12 @@
 
 int main(int argc, char *argv[]) {
 	
-	#pragma omp parallel for
+	int tid;
+	#pragma omp parallel private(tid)
 	{
 		int i;
-		for (i = 0; i < 10; i++) { /* some block code */ }
+		#pragma omp for
+			for (i = 0; i < 10; i++) { tid = omp_get_thread_num(); printf("%i, from %i\n", i, tid);}
 	}
 	return 0;
 }
