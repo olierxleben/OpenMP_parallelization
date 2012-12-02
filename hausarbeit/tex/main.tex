@@ -50,8 +50,9 @@ Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem 
 \end{figure}
 
 \subsection{Parallelisierung von Schleifen} 
-Nach Flynn`scher Klassifikation kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. \textit{(Vgl. siehe \cite{omp08}, Kapitel 3.1: Parallelität auf Schleifenebene)} \\
-Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration, was bedeutet das anstatt die Arbeit in einer Schleife aufzuteilen die Arbeit auf jedem Thread komplett für sich abgearbeitet wird. 
+Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\textit{(Vgl. siehe \cite{omp08}, Kapitel 3.1: Parallelität auf Schleifenebene)} \\
+Ein team of threads wird mittels \textit{\#pragma omp parallel} gestartet. Zur Veranschaulichung sei folgendes Beispiel gegeben: 
+%oder \textit{\#pragma omp parallel for}
 
 
 \subsection{Synchronisation} 
