@@ -1,3 +1,7 @@
+%
+% TODO: Abbildungsreferenzen werden nicht gesetzt!!!!
+% 
+%
 \documentclass[11pt]{scrartcl}
 
 % own geometry
@@ -84,15 +88,23 @@ Mit OpenMP wird ein hoher \textbf{Abstraktionsgrad} erreicht, da Threads nicht d
 Fork-/Join\footnote{Fork/Join:}-Ausf"uhrungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausf"uhrung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die
 Ausf"uhrung in Threads auf. Die erstellten Threads werden als \textit{team of threads}
 bezeichnet\footnote{Die Implementierung von OpenMP entscheidet "uber die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein.}. F"ur OpenMP, bzw. der Entwicklung mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar. \\ 
-Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem das team of threads auf alle Teammitglieder wartet. Die Abbildung \ref{Join-Fork-Modell} stellt einen möglichen Ablauf mit OpenMP dar.
+Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem das team of threads auf alle Teammitglieder wartet. Die Abbildung \ref{join_fork_model} stellt einen möglichen Ablauf mit OpenMP dar. \\
+Sofern nicht anders angegeben verwenden alle Threads eines Thread-Teams einen gemeinsam genutzten Adressraum und können somit auf alle Variablen eines parallen Codeabschnitts zugreifen, über die auch die Kommunikation zwischen den Threads ermöglicht wird. Folgende Klauseln für Variablen können eingesetzt werden:
+\begin{itemize}
+\item \textit{shared}/\textit{private}: Threads können explizit als gemeinsame Variable oder für jeden Thread private Variable deklariert werden.
+\item \textit{firstprivate}/\textit{lastprivate}: Diese Klauseln erlauben die Initialisierung, bzw. Finalisierung der Variable beim Ein- und Austritt in oder aus einem parallen Bereich.
+\item \textit{default}: Das Standardverhalten kann verändert werden. % TODO nochmal prüfen
+\item \textit{reduction}: Eine spezielle gemeinsam genutzte Variable über die mehrere Threads Wrte zusammentragen können.
+\end{itemize}
+
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1.0\textwidth]{img/fork_join.png}
-\label{Join-Fork-Modell}
+\label{join_fork_model}
 \caption{Fork-Join-Prinzip}
 \protect{\textit{Entnommen aus OpenMP Tutorial} (siehe \cite{openmptut})}
-\end{figure}
+\end{figure} 
 
 \subsection{Parallelisierung von Schleifen} 
 Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\textit{(Vgl. siehe \cite{omp08}, Kapitel 3.1: Parallelität auf Schleifenebene)} \\
@@ -101,9 +113,15 @@ Ein team of threads wird mittels \textit{\#pragma omp parallel} gestartet. Zur V
 \lstinputlisting[caption= pragma omp parallel - Beispiel, label=parallelExample]{../src/1_3_example/parallel.c}
 Die For-Schleife in Zeile 8 wird von allen vom System zur Verfügung stehenden Threads ausgeführt. Allerdings teilen sich die Threads nicht die Arbeit, sondern jeder Thread führt die Schleife komplett für sich aus. Um eine Schleife parallel auszuführen, muss über eine weitere Direktive, wie in Listing \ref{parallelForExample} zu sehen, eingefügt werden. 
 
-\lstinputlisting[caption= pragma omp parallel for - Beispiel, label=parallelForExample]{../src/1_3_example/parallelfor.c} \\
-
-In diesem Beispiel wird der zu parallelisierende Bereich eine Variable \textit{tid}, die threadId, übergeben. Jeder Thread erhält diese Variable, die nicht gemeinsam genutzt werden kann (private). 
+\lstinputlisting[caption= pragma omp parallel for - Beispiel, label=parallelForExample]{../src/1_3_example/parallelfor.c}
+In diesem Beispiel wird der zu parallelisierende Bereich eine Variable \textit{tid}, die threadId, übergeben. Jeder Thread erhält diese Variable, die nicht gemeinsam genutzt werden kann (private). Mittels \textit{\#pragma omp for} wird dem Compiler mitgeteilt das die darauffolgende Schleife parallel durch das team of threads  im parallelen Bereich ausgeführt werden soll. \\
+Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleifen in kanonischer Form geschrieben sein müssen. Die kanonische Form liegt wenn folgende Bedingungen erfüllt sind: 
+\begin{itemize}
+\item Anzahl der Schleifendurchläufe muss berechnbar sein und darf sich innerhalb des Schleifenblocks nicht ändern. Ebenso dürfen sich Start und Endwert während des Schleifendurchlaufs nicht ändern.
+\item Es sind nur boolsche Vergleichoperator im Schleifenkopf erlaubt.
+\item Das Inkrement im Schleifenkopf darf nur aus Addition oder Subtraktion inkrementiert oder dekrementiert werden. 
+\item \textbf{break}-Anweisungen dürfen nicht im Schleifenrumpf verwendet werden. Allerdings kann eine Iteration durch eine \textbf{continue}-Anweisung übergangen werden oder das gesamte Programm mittel \textbf{exit} verlassen werden.
+\end{itemize}
 
 \subsection{Synchronisation} 
 
