@@ -1,6 +1,7 @@
 %
-% TODO: Abbildungsreferenzen werden nicht gesetzt!!!!
-% 
+% TODO: 
+% Abbildungsreferenzen werden nicht gesetzt!!!!
+% Anhänge referenzieren
 %
 \documentclass[11pt]{scrartcl}
 
@@ -69,8 +70,11 @@ OpenMP [Working DRAFT]}
 \tableofcontents
 
 \pagebreak
+% set new page style
 \pagestyle{plain}
-\setcounter{page}{1}
+% hoooray page 1! begins 
+\setcounter{page}{1} 
+
 \section{OpenMP} Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle
 f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den
 Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles
@@ -135,6 +139,11 @@ Wie im Kapitel 1.2 bereits erläutert wird ein team of threads durch ihren gemei
 \pagebreak % second part ends
 
 \section{Reimplementierung der Parallelisierungsaufgabe}
+
+\subsection{Implementierungsgrundlage}
+Die Implementierung und Parallelisierung mittels OpenMP wird beispielhaft in diesem Dokument aufgezeigt. Als Grundlage für die Implementierung wird eine optimierte Version des Quelltexts der Parallelisierungsaufgabe (siehe Anlage !?!?!?!) aus dem Intel Programmierwettbewerb von November 2012 verwendet. Die Aufgabenstellung der Programmieraufgabe ist als Anhang !?!?! beigefügt. 
+
+
 
 \pagebreak % third part ends
 
