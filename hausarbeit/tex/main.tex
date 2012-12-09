@@ -82,7 +82,8 @@ Ursprünglich wurde OpenMP für den Bereich High Performance Computing entwickel
 
 Mit OpenMP wird ein hoher \textbf{Abstraktionsgrad} erreicht, da Threads nicht durch einen Programmierer initialisiert, gestartet oder beenden werden m"ussen. Wie bereits in der Einf"uhrung erwähnt, beitet OpenMP eine gute \textbf{Portabilität} des Programms an, zum einen ist OpenMP in vielen Mainstream-Compilern implementiert, zum anderen können Compiler ohne OpenMP-Unterst"utzung das Programm ohne Veränderung kompilieren, da die Compilerdirektiven durch Pragmas eingesetzt und ignoriert werden können. Auch bleibt der sequenzielle Programmcode vollständig erhalten, wenn nicht mittels OpenMP kompiliert wird. Der Quelltext kann somit \textbf{Schrittweise parallelisiert} werden. 
 
-\subsection{Ausführungsmodell} Die parallele Ausf"uhrung erfolgt durch Threads auf dem
+\subsection{Ausführungsmodell} 
+Die parallele Ausf"uhrung erfolgt durch Threads auf dem
 Fork-/Join\footnote{Fork/Join:}-Ausf"uhrungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausf"uhrung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die
 Ausf"uhrung in Threads auf. Die erstellten Threads werden als \textit{team of threads}
 bezeichnet\footnote{Die Implementierung von OpenMP entscheidet "uber die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein.}. F"ur OpenMP, bzw. der Entwicklung mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar. \\ 
@@ -123,15 +124,17 @@ Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleif
 
 \subsection{Synchronisation} 
 
-\subsection{Abschnitte und Aufgaben}
+Wie im Kapitel 1.2 bereits erläutert wird ein team of threads durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist die Reihenfolge der Bearbeitung der Arbeit nicht "vorhersehbar". Um einen kritischen Adressraum innerhalb eines parallelen Abschnitts zu kennzeichnen, bietet OpenMP ein weitere Direktive an: \textit{\#pragma omp critical \{ ... \}}. Der von der Klammer umschlossene Code wird demnach von nur einem Thread ausgeführt. 
+
+%\subsection{Abschnitte und Aufgaben}
 
 \pagebreak % first part ends
 
-\section{Vergleich mit TBB und anderen?!}
+\section{Vergleich mit Intel`s Threading Building Blocks}
 
 \pagebreak % second part ends
 
-\section{Reimplementierung}
+\section{Reimplementierung der Parallelisierungsaufgabe}
 
 \pagebreak % third part ends
 
