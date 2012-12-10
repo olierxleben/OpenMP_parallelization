@@ -1,6 +1,7 @@
 %
-% TODO: Abbildungsreferenzen werden nicht gesetzt!!!!
-% 
+% TODO: 
+% Abbildungsreferenzen werden nicht gesetzt!!!!
+% Anhänge referenzieren
 %
 \documentclass[11pt]{scrartcl}
 
@@ -74,8 +75,11 @@ OpenMP [Working DRAFT]}
 \tableofcontents
 
 \pagebreak
+% set new page style
 \pagestyle{plain}
-\setcounter{page}{1}
+% hoooray page 1! begins 
+\setcounter{page}{1} 
+
 \section{OpenMP} Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle
 f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den
 Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles
@@ -138,7 +142,9 @@ Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleif
 
 \subsection{Synchronisation} 
 
-\subsection{Abschnitte und Aufgaben}
+Wie im Kapitel 1.2 bereits erläutert wird ein team of threads durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist die Reihenfolge der Bearbeitung der Arbeit nicht "vorhersehbar". Um einen kritischen Adressraum innerhalb eines parallelen Abschnitts zu kennzeichnen, bietet OpenMP ein weitere Direktive an: \textit{\#pragma omp critical \{ ... \}}. Der von der Klammer umschlossene Code wird demnach von nur einem Thread ausgeführt. 
+
+%\subsection{Abschnitte und Aufgaben}
 
 \pagebreak % first part ends
 
@@ -149,6 +155,8 @@ Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleif
 \section{Vergleich eines parallelen OpenMP-Programms mit einem vergleichbaren auf Grundlage der Intel TBB}
 
 \subsection{Vorgehen}
+
+Die Implementierung und Parallelisierung mittels OpenMP wird beispielhaft in diesem Dokument aufgezeigt. Als Grundlage für die Implementierung wird eine optimierte Version des Quelltexts der Parallelisierungsaufgabe (siehe Anlage !?!?!?!) aus dem Intel Programmierwettbewerb von November 2012 verwendet. Die Aufgabenstellung der Programmieraufgabe ist als Anhang !?!?! beigefügt. 
 
 \subsection{Auftretende Probleme}
 
