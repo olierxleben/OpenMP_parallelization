@@ -14,7 +14,11 @@
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage{xcolor}
+\usepackage{jurabib}
 \usepackage{hyperref}
+
+\include{lib/jurabib}
+\bibliographystyle{jurabib}
 
 % setup of source code listings
 \usepackage{listings}
@@ -83,7 +87,7 @@ OpenMP [Working DRAFT]}
 \section{OpenMP} Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle
 f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den
 Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles
-Programmiermodell f"ur Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verf"ugung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert. \textit{(Vgl. \cite{omp08} Kapitel 1: Einf"uhrung)}
+Programmiermodell f"ur Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verf"ugung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert.\footnote{Vgl. \cite{openmp08} }
 
 Ein weiteres Plus f"ur den Einsatz von OpenMP ist die weite Verbreitung von Multi-Core-Rechnern und die Implementierung in vielen verbreiteten Compilern. So ist OpenMP im GCC seit der Version 4.2, im Visual Studio C/C++ Compiler seit der Version 2005 oder im Intel C/C++-Compiler seit Version 8 verf"ugbar. Compiler die keine OpenMP-Unterst"utzung bieten, ignorieren aufgrund der Pragma-Compilerdirektiven die Ausf"uhrung als parallelisierte OpenMP-Implementierung, was zu einer guten Portabilität f"uhrt.
 
@@ -191,14 +195,17 @@ Funktionale Vor- und Nachteile im Vergleich zur TBB:
 
 \lstlistoflistings
 
+\renewcommand*{\biburlprefix}{(URL: }
+\renewcommand*{\biburlsuffix}{)}
+
+\pagebreak
+\addcontentsline{toc}{chapter}{Literaturverzeichnis} % Eintrag ins Inhaltsverzeichnis
 \bibliography{bib/bib}
-\bibliographystyle{plain}
+
 %\begin{thebibliography}{3}
 %	\bibitem{omp08} S. Hoffmann, R. Lienhart: OpenMP - Eine Einf{\"u}hrung in die parallele Programmierung in C/C++
 	
 %	\bibitem{openmptut} Blaise Barney, Lawrence Livermore National Laboratory: OpenMP Tutorial \\ https://computing.llnl.gov/tutorials/openMP/ \\ \textit{abgerufen am 24.11.2012}
 %\end{thebibliography}
-
-
 
 \end{document}
