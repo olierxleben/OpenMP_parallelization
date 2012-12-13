@@ -161,10 +161,7 @@ Die Implementierung und Parallelisierung mittels OpenMP wird beispielhaft in die
 \subsection{Auftretende Probleme}
 
   * Keine Entsprechung für parallel\_do in OpenMP. Vorgehen? (Umformung in rekursive Variante, zu Benchmark-Zwecken sequentiell arbeiten lassen?)
-  * Egal, auch TBB-Version funktioniert besser mit Tasks.
   * Tasks nicht in allen Compiler-Versionen unterstützt
-  
-Problem: Reduktion funktioniert in OpenMP nur mit Skalarwerten (Quelle: Barney 2012). Ersatz bspw. mit "parallel for" und Absicherung der Vergleichsoperationen mit "critical". Allerdings (wahrscheinlich?) zulasten der Performance.
 
 \subsection{Ergebnisse}
 
@@ -181,6 +178,8 @@ Funktionale Vor- und Nachteile im Vergleich zur TBB:
   * (+) Mehr Möglichkeiten zur Synchronisation (z.B. durch Barriers)
   * (-) Keine Threadsicheren Datenstrukturen wie in der TBB (die entsprechenden ADT der TBB können jedoch auch unter OpenMP verwendet werden)
   * (-) TBB hat verschiedene Datentypen zur Synchronisierung (Normale Mutexe, Spin-Mutexe, Queue-Mutexe, und alles nochmal als RW-Variante), OpenMP kennt nur einfache Locks.
+
+\cite{openmptut}
 
 \pagebreak % third part ends
 
