@@ -161,7 +161,10 @@ Die Implementierung und Parallelisierung mittels OpenMP wird beispielhaft in die
 \subsection{Auftretende Probleme}
 
   * Keine Entsprechung für parallel\_do in OpenMP. Vorgehen? (Umformung in rekursive Variante, zu Benchmark-Zwecken sequentiell arbeiten lassen?)
+  * Egal, auch TBB-Version funktioniert besser mit Tasks.
   * Tasks nicht in allen Compiler-Versionen unterstützt
+  
+Problem: Reduktion funktioniert in OpenMP nur mit Skalarwerten (Quelle: Barney 2012). Ersatz bspw. mit "parallel for" und Absicherung der Vergleichsoperationen mit "critical". Allerdings (wahrscheinlich?) zulasten der Performance.
 
 \subsection{Ergebnisse}
 
