@@ -157,7 +157,7 @@ Wie im Kapitel 1.2 bereits erläutert wird ein team of threads durch ihren gemei
 \subsection{Vorgehen}
 
 Die Implementierung und Parallelisierung mittels OpenMP wird beispielhaft in diesem Dokument aufgezeigt. Als Grundlage für die Implementierung wird eine optimierte Version des Quelltexts der Parallelisierungsaufgabe (siehe Anlage !?!?!?!) aus dem Intel Programmierwettbewerb von November 2012 verwendet. Die Aufgabenstellung der Programmieraufgabe ist als Anhang !?!?! beigefügt. 
-
+\cite{openmp08}
 \subsection{Auftretende Probleme}
 
   * Keine Entsprechung für parallel\_do in OpenMP. Vorgehen? (Umformung in rekursive Variante, zu Benchmark-Zwecken sequentiell arbeiten lassen?)
@@ -191,10 +191,14 @@ Funktionale Vor- und Nachteile im Vergleich zur TBB:
 
 \lstlistoflistings
 
-\begin{thebibliography}{3}
-	\bibitem{omp08} S. Hoffmann, R. Lienhart: OpenMP - Eine Einf{\"u}hrung in die parallele Programmierung in C/C++
+\bibliography{bib/bib}
+\bibliographystyle{plain}
+%\begin{thebibliography}{3}
+%	\bibitem{omp08} S. Hoffmann, R. Lienhart: OpenMP - Eine Einf{\"u}hrung in die parallele Programmierung in C/C++
 	
-	\bibitem{openmptut} Blaise Barney, Lawrence Livermore National Laboratory: OpenMP Tutorial \\ https://computing.llnl.gov/tutorials/openMP/ \\ \textit{abgerufen am 24.11.2012}
-\end{thebibliography}
+%	\bibitem{openmptut} Blaise Barney, Lawrence Livermore National Laboratory: OpenMP Tutorial \\ https://computing.llnl.gov/tutorials/openMP/ \\ \textit{abgerufen am 24.11.2012}
+%\end{thebibliography}
+
+
 
 \end{document}
