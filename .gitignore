@@ -1,6 +1,6 @@
 .DS_STORE
 *.PDF
-*.pdf
+hausarbeit/tex/*.pdf
 *.o
 
 hausarbeit/src/1_3_example/test

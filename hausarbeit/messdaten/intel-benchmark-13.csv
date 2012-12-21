@@ -1,3 +1,4 @@
+Implementierung;Threads;Walltime;Usertime;Cpu
 OMP;1;84.39;82.88;0.982107
 OMP;1;84.10;82.57;0.981807
 OMP;1;85.27;83.44;0.978539
