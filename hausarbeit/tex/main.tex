@@ -60,6 +60,11 @@
 % layout the caption ontop of code
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
 
+% Headings
+\usepackage{fancyhdr}
+\fancyhead[R]{\colorbox{blue!20}{ Oliver Erxleben}}
+\fancyfoot{}
+
 % Document begins now
 \begin{document}
 
@@ -80,7 +85,7 @@ OpenMP [Working DRAFT]}
 
 \pagebreak
 % set new page style
-\pagestyle{plain}
+\pagestyle{fancy}
 % hoooray page 1! begins 
 \setcounter{page}{1} 
 
