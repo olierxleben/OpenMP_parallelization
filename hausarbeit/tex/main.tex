@@ -50,6 +50,9 @@
          C++
  }
 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}\medskipamount
+
 \DeclareCaptionFont{white}{\color{white}}
 \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
@@ -95,8 +98,8 @@ OpenMP [Working DRAFT]}
 \setcounter{page}{1} 
 
 \section{OpenMP} Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle
-f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern entwickelt wird. Ziel von OpenMP, welches mittlerweile den
-Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles
+f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern
+entwickelt wird. Ziel von OpenMP, welches mittlerweile den Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles
 Programmiermodell f"ur Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verf"ugung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert.\footnote{Vgl. \cite{openmp08} }
 
 Ein weiteres Plus f"ur den Einsatz von OpenMP ist die weite Verbreitung von Multi-Core-Rechnern und die Implementierung in vielen verbreiteten Compilern. So ist OpenMP im GCC seit der Version 4.2, im Visual Studio C/C++ Compiler seit der Version 2005 oder im Intel C/C++-Compiler seit Version 8 verf"ugbar. Compiler die keine OpenMP-Unterst"utzung bieten, ignorieren aufgrund der Pragma-Compilerdirektiven die Ausf"uhrung als parallelisierte OpenMP-Implementierung, was zu einer guten Portabilität f"uhrt.
@@ -172,30 +175,121 @@ Wie im Kapitel 1.2 bereits erläutert wird ein team of threads durch ihren gemei
 
 \subsection{Vorgehen}
 
-Die Implementierung und Parallelisierung mittels OpenMP wird beispielhaft in diesem Dokument aufgezeigt. Als Grundlage für die Implementierung wird eine optimierte Version des Quelltexts der Parallelisierungsaufgabe (siehe Anlage !?!?!?!) aus dem Intel Programmierwettbewerb von November 2012 verwendet. Die Aufgabenstellung der Programmieraufgabe ist als Anhang !?!?! beigefügt. 
-\cite{openmp08}
+Die Implementierung und Parallelisierung mittels OpenMP wird beispielhaft in diesem Dokument aufgezeigt. Als Grundlage
+für die Implementierung wird eine optimierte Version des Quelltexts der Parallelisierungsaufgabe (siehe Anlage !?!?!?!)
+aus dem Intel Programmierwettbewerb von November 2012 verwendet. Die Aufgabenstellung der Programmieraufgabe ist als
+Anhang !?!?! beigefügt.
+
 \subsection{Auftretende Probleme}
 
-  * Keine Entsprechung für parallel\_do in OpenMP. Vorgehen? (Umformung in rekursive Variante, zu Benchmark-Zwecken sequentiell arbeiten lassen?)
-  * Tasks nicht in allen Compiler-Versionen unterstützt
+Bei der Portierung des Programms von TBB auf OpenMP fiel vor allem der geringere Sprachumfang der OpenMP-Erweiterung
+negativ auf.
+
+Beispielsweise bietet die TBB eine (wenn auch nicht sonderlich effiziente)\footnote{Vgl. hierzu \cite{intel_cook_2012}:
+Laut Handbuch stellt sich ein Parallelisierungsnutzen erst ab mehreren tausend Instruktionen pro Schleifendurchlauf
+ein.} parallele While-Schleife in Form der \texttt{tbb::parallel\_do}-Methode. Ein vergleichbares OpenMP-Konstrukt
+existiert nicht. Das Problem konnte gelöst werden, indem der iterative, mit einem Stack arbeitende, Algorithmus zurück
+in eine rekursive Form überführt wurde. Diese konnte anschließend durch Task-Parallelität ohne Probleme parallelisiert
+werden (Task-Parallelität wird sowohl von der TBB als auch von OpenMP unterstützt).
+
+Ein weiteres Problem fiel bei der Implementierung des task-parallelen Algorithmus auf: Task-Parallelität wurde erst in
+der Version 3.0 des OpenMP-Standards eingeführt.\footnote{Vgl. \cite[S.~134]{openmp08} und
+\cite[S.~406ff]{ayguade_design_2009}.} Obwohl diese Version bereits 2008 veröffentlicht wurde,\footnote{Vgl.
+\cite{openmp.org_openmp_2012}.} wird sie noch nicht von allen Compilern unterstützt. So verwendet MacOS X
+beispielsweise auch 2012 noch die GCC-Version 4.2 von 2007 als Standard-Compiler. \emph{Visual C++} von Microsoft
+unterstützt sogar in der aktuellen Version nur die Version 2.0 [!] des Standards.\footnote{Vgl.
+\cite{openmp.org_openmp_2012-2} und
+\cite{microsoft_openmp_2012}.}
+
+Darüber hinaus fiel auf, dass die TBB zahlreiche hochentwickelte threadsichere Datenstrukturen anbietet (insbesondere
+von der \texttt{tbb::concurrent\_hash\_map} wurde in der eingereichten Lösung des Intel-Wettbewerbs intensiver Gebrauch
+gemacht). OpenMP hingegen bietet selbst keine entsprechenden Datenstrukturen an. Da die TBB jedoch explizit einen
+Parallelbetrieb mit OpenMP gestattet,\footnote{Vgl. \cite{intel_mixing_2012}.} konnte das Problem gelöst werden, indem
+auch in der OpenMP-Version des Programms die threadsicheren Datenstrukturen der TBB weiterverwendet wurden.
 
 \subsection{Ergebnisse}
 
-Noch zu bestimmen.
+Um die Leistungsfähigkeit der TBB- und OpenMP-Programme zu testen, wurde eine Eingabedatei mit 5 Millionen Flügen
+verwendet. Diese Eingabedatei wurde nicht von den Veranstaltern des Wettbewerbs zur Verfügung gestellt, sondern wurde im
+offiziellen Forum des Wettbewerbs von einem Teilnehmer angeboten. Die Verwendung einer Eingabedatei dieser Größe war
+jedoch notwendig, um überhaupt Unterschiede im Laufzeitverhalten beider Lösungen messen zu können.
+
+Gemessen wurden Laufzeitverhalten und CPU-Auslastung des Programms in Abhängigkeit der zur Verfügung stehenden
+Threads (beginnend bei einem Thread bis hin zu 24 Threads). Das Laufzeitverhalten ist in Abbildung \ref{s13_runtime}
+auf Seite \pageref{s13_runtime} grafisch aufgetragen (jeder Datenpunkt ist das arithmetische Mittel aus je zehn
+Einzelmessungen). Die Laufzeit des TBB-Programms konvergiert hier gegen 21,33 Sekunden, die des OMP-Programms gegen
+19,56 Sekunden.
+
+Abbildung \ref{s13_speedup} auf Seite \pageref{s13_speedup} zeigt außerdem die Beschleunigung oder engl. \emph{Speed-Up} (nach
+\citeauthoryear{rauber_parallel_2010} definiert als $S_p(n) = \frac{T^*(n)}{T_p(n)}$).\footnote{Vgl.
+\cite[S.~162]{rauber_parallel_2010}.} Der Speed-Up des TBB-Programms konvergiert gegen einen Faktor von 3,91 und der des
+OMP-Programms gegen 4,29.
+
+Die Effizienz beider Programme (definiert als $E_p(n) = \frac{S_p(n)}{p} =
+\frac{T^*(n)}{p \cdot T_p(n)}$)\footnote{Vgl. \cite[S.~164]{rauber_parallel_2010}.} ist zudem in Abbildung
+\ref{s13_efficiency} auf Seite \pageref{s13_efficiency} gezeigt.
+
+\begin{figure}[pbt]
+\centering
+\includegraphics{../messdaten/s13_runtime.pdf}
+\caption{Laufzeitverhalten, bei 5 Mio. Flügen und 1-24 Threads.}
+\label{s13_runtime}
+\end{figure}
+
+\begin{figure}[pbt]
+\centering
+\includegraphics{../messdaten/s13_speedup.pdf}
+\caption{Parallelisierungsgewinn, bei 5 Mio. Flügen und 1-24 Threads.}
+\label{s13_speedup}
+\end{figure}
+
+\begin{figure}[pbt]
+\centering
+\includegraphics{../messdaten/s13_efficiency.pdf}
+\caption{Effizienz, bei 5 Mio. Flügen und 1-24 Threads.}
+\label{s13_efficiency}
+\end{figure}
+
+In der Auswertung fällt auf, dass die Laufzeit (und der davon abhängige Speed-Up) zügig konvergieren. Einerseits ist
+dies zweifellos darauf zurück zu führen, dass das Testsystem über 12 physikalische Rechenkerne verfügt; bei mehr
+als 12 Threads kann daher nur wenig zusätzlicher Nutzen durch weitere Threads erwartet werden. Andererseits fällt auf,
+dass die gemessene Laufzeit auch bei weniger als 12 Threads deutlich unter der idealen Laufzeit (hier angenommen als
+$T_{I,p}(n) = \frac{T^*(n)}{p}$) liegt.
+
+Der geringere Speed-Up ist vermutlich auf sequentielle Anteile des Programms sowie erhöhten Synchronisationsbedarf durch
+Zugriff auf gemeinsame Datenstrukturen zurück zu führen. Diese Einflussfaktoren begrenzen nach dem \emph{Amdahlschen
+Gesetz} den maximal erreichbaren Speed-Up.\footnote{Vgl. \cite[S.~318]{bengel_masterkurs_2008}}
+
+%Der geringere Speed-Up kann mit dem \emph{Amdahlschen Gesetz} erklärt werden. Dieses definiert den maximalen Speed-Up
+%eines Programms wie folgt:\footnote{Vgl. \cite[S.~318]{bengel_masterkurs_2008}}
+
+%\begin{equation}
+%S_p(n) = \frac{T^*(n)}{f \cdot T^*(n) + \frac{1-f}{p}T^*(n)} = \frac{1}{f + \frac{1-f}{p}}
+%\end{equation}
 
 \section{Fazit}
 
-Einfach anwendbar, speziell auf bereits existierenden sequentiellen Code
+OpenMP stellt eine interessante Alternative zur bereits aus der Veranstaltung bekannten TBB-Bibliothek dar. Die
+Compiler-Direktiven von OpenMP sind nach eigener Auffassung einfacher handhabbar als die auf \emph{Function Objects}
+basierende TBB. Dies macht sich vor allem bei der Parallelisierung bereits bestehender, sequentieller Programme
+bemerkbar.
 
-Funktionale Vor- und Nachteile im Vergleich zur TBB:
+Negativ fällt im Vergleich zur TBB der etwas geringere Sprachumfang auf: So kennt OpenMP keine parallelen
+While-Schleifen und die Task-Parallelität, die insbesondere für die Parallelisierung irregulärer Probleme nötig
+ist,\footnote{Vgl. \cite[S.~6]{duran_tasking_2009}} wurde erst spät in den Standard aufgenommen und wird noch nicht von
+allen Compilern unterstützt.
 
-  * (-) Parallele While-Schleifen fehlen.
-  * (-) Task-Parallelität wurde erst spät in den Standard aufgenommen und steht noch nicht in allen Compiler-Versionen zur Verfügung (verflucht mögt ihr sein, Apple!)
-  * (+) Mehr Möglichkeiten zur Synchronisation (z.B. durch Barriers)
-  * (-) Keine Threadsicheren Datenstrukturen wie in der TBB (die entsprechenden ADT der TBB können jedoch auch unter OpenMP verwendet werden)
-  * (-) TBB hat verschiedene Datentypen zur Synchronisierung (Normale Mutexe, Spin-Mutexe, Queue-Mutexe, und alles nochmal als RW-Variante), OpenMP kennt nur einfache Locks.
+Einen Vorteil OpenMPs gegenüber der TBB stellt der -- zwar geringe, aber dennoch messbare -- Geschwindigkeitsvorteil
+dar. In den durchgeführten Messungen konnte mit OpenMP bei hoher Parallelität ein um $\frac{4,291}{3,913}-1 =
+9,66\%$ höherer Speed-Up erreicht werden.
 
-\cite{openmptut}
+Zusammenfassend eignet sich OpenMP ausgezeichnet zur Parallelisierung bereits besteh\-enden Codes. Die
+Compiler-Direktiven sind vergleichweise einfach handhabbar und erhalten die Lesbarkeit des ursprünglichen Quelltextes.
+Im Unteschied zur TBB beschränkt sich OpenMP zudem nicht auf C++, sondern ermöglicht auch die Parallelisierung von C-
+oder Fortran-Code.
+
+Da OpenMP jedoch keine geeigneten threadsicheren Datenstrukturen mit sich bringt, empfiehlt sich die
+Verwendung von OpenMP zusammen mit einer entsprechenden Bibliothek (in C++ beispielsweise die TBB- oder die Boost-Bibliothek).
 
 \pagebreak % third part ends
 
