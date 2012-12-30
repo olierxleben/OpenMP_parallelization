@@ -107,13 +107,24 @@
 	
 	<div id="results_6" class="step slide" data-x="2320" data-y="2480" data-z="-300" data-scale="0.075" data-rotate="-175">
 		<h1>OpenMP</h1>
-		<div><span class="pro">+</span> Schneller</div>
-		<div><span class="pro">+</span> Einfach handhabbar</div>
-		<div><span class="pro">+</span> Auch für C und Fortran</div>
+		<div class="cons">
+			<div class="con">&minus;</div> <div class="point">Geringer Sprachumfang<small>(Ergänzung durch andere Bibliotheken, z.B. TBB oder Boost)</small></div>
+		</div>
+		<div class="pros">
+			<div class="pro">+</div> <div class="point">Schneller</div>
+			<div class="pro">+</div> <div class="point">Einfach handhabbar</div>
+			<div class="pro">+</div> <div class="point">Auch für C und Fortran</div>
+		</div>
 					
 		<h1>TBB</h1>
-		<div><span class="pro">+</span> Höherer Sprachumfang (parallel_do und parallel_reduce)</div>
-		<div><span class="pro">+</span> Threadsichere Datenstrukturen (concurrent_{hash_map|vector|...})</div>
+		<div class="cons">
+			<div class="con">&minus;</div> <div class="point">Nur für C++</div>
+			<div class="con">&minus;</div> <div class="point">Umständlich, Wartbarkeit <small>Function Objects sorgen für schwer lesbaren Code</small></div>
+		</div>
+		<div class="pros">
+			<div class="pro">+</div> <div class="point">Höherer Sprachumfang <small>parallel_do und parallel_reduce</small></div>
+			<div class="pro">+</div> <div class="point">Threadsichere Datenstrukturen <small>concurrent_{hash_map,vector,...}}</small></div>
+		</div>
 	</div>
 	
 	<div id="literature" class="step slide" data-x="0" data-y="0" data-z="-2000" data-scale="1" data-rotate-x="-90">
