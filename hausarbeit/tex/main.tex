@@ -316,6 +316,58 @@ Verwendung von OpenMP zusammen mit einer entsprechenden Bibliothek (in C++ beisp
 \addcontentsline{toc}{section}{Literaturverzeichnis} % Eintrag ins Inhaltsverzeichnis
 \bibliography{bib/bib}
 
+\appendix
+
+\section{Aufgabenstellung des Intel Accelerate Your Code-Programmierwettbewerbs}
+
+\label{intel_ayc_problem}
+
+Es folgt ein Auszug aus:
+\url{http://www.intel-software-academic-program.com/contests/ayc/2012-11/problem/Intel_AccelerateYourCode_2012-11_problem.pdf}
+
+\begin{quote}
+Let’s imagine you have to go to a software conference in San Francisco (lucky you !), you live in
+Berlin. Booking the cheapest flight is easy when you want to go from point A to point B and you
+know the dates. Several websites do that already.
+
+But if you want to pay a little more to extend your flight and do some tourism, it’s getting
+complicated : you are interested in a lot of places (airports in Brazil, Mexico, Colombia, ...), and
+you are pretty flexible about the dates (before of after your conference). You just want to find
+a good opportunity : If I can get Berlin-SanFrancisco-SaoPaulo-Berlin for only 100 euros more
+than just Berlin-SanFrancisco-Berlin, I’ll spend a week there on vacation!
+
+But most flights requires a layover (a stop), you have to deal with multiple airline companies,
+and the price of a single flight is varying depending on the company used for the other flights. If
+you take all the segments of a flights from a single company, it’s 30\% cheaper.
+Plus, companies are forming “alliances” to offer cheaper flights to the customers booking
+only inside the alliance. If you take all the segments of a flight from a single alliance, it’s 20\%
+cheaper.
+
+Even today, this task requires human knowledge and skills because reservation software can’t
+handle the huge combinations. It could be automated. Customers would have more options,
+spend less time searching on websites, airlines would fill empty planes.
+
+For this contest, you are given a first input file listing all the flights, and a second input file listing
+the alliances of companies (a company can be in several alliances).
+
+A source file solving the problem, input files and expected outputs are given to help you start:\\
+\url{http://www.intel-software-academic-program.com/contests/ayc/2012-11/problem/}
+
+The goal is to optimize and parallelize the software. You can start from scratch if you want, but
+it’s probably safer to optimize and parallelize this reference version.
+
+The goal is to optimize and parallelize for a wide range of use cases (few/many flights, few/
+many alliances, short/wide date ranges, ...).
+\end{quote}
+
+\section{Messdaten}
+
+Für die Untersuchung des Laufzeitverhaltens wurde jeweils die tatsächliche Laufzeit (\emph{Wall Time}) und die
+aufgewandte CPU-Zeit gemessen. Die Anzahl der zur Verfügung stehenden Threads wurde von 1 auf 24 erhöht. Um Messfehler
+und Ausreißer zu vermeiden, wurde jeweils das arithmetische Mittel aus 10 Einzelmessungen gebildet.
+
+Die gemessenen Rohdaten und die R-Skripte zur Auswertung liegen dieser Arbeit auf Datenträger bei.
+
 %\begin{thebibliography}{3}
 %	\bibitem{omp08} S. Hoffmann, R. Lienhart: OpenMP - Eine Einf{\"u}hrung in die parallele Programmierung in C/C++
 	
