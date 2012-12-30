@@ -1,0 +1,12 @@
+#map h1 { font-size: 180%; line-height: 90%; margin-bottom: 1em; }
+body { /*background: white;*/ }
+
+.s180 { font-size: 180%; }
+
+.pro { color: #008000; font-weight: bold; }
+.con { color: #800000; font-weight: bold; }
+
+#results_6 h1 { font-weight: bold; font-size: 180%; margin: 1em 0em; }
+#literature h1 { font-weight: bold; font-size: 180%; margin: 1em 0em; }
+#literature ul { font-size: 60%; line-height: 100%; }
+#literature ul li { margin-top: 1em; }
