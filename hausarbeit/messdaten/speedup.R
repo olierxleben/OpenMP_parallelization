@@ -28,15 +28,15 @@ cat("Convergence (TBB):", tbb_conv, "seconds\n")
 
 setOutput()
 
-plot(omp$Threads, omp_rseq/omp$Walltime, col="red", ylim=c(1, 24), xlab="Threads", ylab="Speed-Up", log="y")
-points(tbb$Threads, tbb_rseq/tbb$Walltime, col="blue", pch=2)
+plot(omp$Threads, omp_rseq/omp$Walltime, col="red", ylim=c(1, 24), xlab="Threads", ylab="Speed-Up", log="y", lwd=out.lwd)
+points(tbb$Threads, tbb_rseq/tbb$Walltime, col="blue", pch=2, lwd=out.lwd)
 
 omp_ideal <- function(x) x
-curve(omp_ideal, add=TRUE, col="green", lty=2)
+curve(omp_ideal, add=TRUE, col="green", lty=2, lwd=out.lwd)
 curve(0*x + omp_conv, add=TRUE, col="red", lty=3)
 curve(0*x + tbb_conv, add=TRUE, col="blue", lty=3)
 
-legend(x="topright", legend=c("OMP","TBB","Ideal"), col=c("red","blue","green"), pch=c(1,2,-1), lty=c(-1,-1,2), bg="white")
+legend(x="topright", legend=c("OMP","TBB","Ideal"), col=c("red","blue","green"), pch=c(1,2,-1), lty=c(-1,-1,2), bg="white", lwd=out.lwd)
 
 text(labels=c(paste(c("OMP: ",round(omp_conv,3)),collapse='')), x=20, y=omp_conv*1.2)
 text(labels=c(paste(c("TBB: ",round(tbb_conv,3)),collapse='')), x=20, y=tbb_conv*0.8)

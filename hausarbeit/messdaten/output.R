@@ -14,6 +14,7 @@ png.height <- 768
 png.pointsize <- 24
 
 out.mode <- commandArgs(trailingOnly=TRUE)[1]
+out.lwd <- 1
 cat("Output mode:", out.mode, "\n")
 
 if (is.na(out.mode)) {
@@ -21,6 +22,8 @@ if (is.na(out.mode)) {
 } else if (out.mode != "png" && out.mode != "pdf") {
 	stop("Unknown output mode:", out.mode)
 }
+
+out.lwd <- if (out.mode == "png") 3 else 1
 
 setOutput <- function() {
 	if (out.mode == "png") {
