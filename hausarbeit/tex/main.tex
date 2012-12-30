@@ -169,16 +169,23 @@ Wie im Kapitel 1.2 bereits erläutert wird ein team of threads durch ihren gemei
 
 %\pagebreak % second part ends
 
-\section{Vergleich eines parallelen OpenMP-Programms mit einem vergleichbaren auf Grundlage der Intel TBB}
+\section{Untersuchung des Laufzeitverhaltens von OpenMP im Vergleich zur Intel TBB}
 % renew to mark part of other team member
 \fancyhead[R]{\colorbox{green!20}{ Martin Helmich}}
 
-\subsection{Vorgehen}
+\subsection{Zielsetzung und Vorgehen}
 
-Die Implementierung und Parallelisierung mittels OpenMP wird beispielhaft in diesem Dokument aufgezeigt. Als Grundlage
-für die Implementierung wird eine optimierte Version des Quelltexts der Parallelisierungsaufgabe (siehe Anlage !?!?!?!)
-aus dem Intel Programmierwettbewerb von November 2012 verwendet. Die Aufgabenstellung der Programmieraufgabe ist als
-Anhang !?!?! beigefügt.
+Zielsetzung dieses Abschnittes ist es, die Möglichkeiten zur Parallelisierung eines sequentiellen Programms mit OpenMP
+sowie die Leistungsfähigkeit und Skalierbarkeit von OpenMP im Vergleich zu Parallelisierungslösungen anderer Hersteller
+zu untersuchen.
+
+Als Beispiel dient dazu unser Beitrag zum von Intel ausgerichteten \emph{Accelerate Your Code}-Programmierwettbewerb vom
+November 2012. Der Wettbewerbsbeitrag verwendet die Intel \emph{Threading Building Blocks}-Bibliothek (kurz TBB). Für
+diese Arbeit wurde der Beitrag nach OpenMP portiert und anschließend das Laufzeitverhalten beider Programme untersucht
+und verglichen.
+
+Die Aufgabenstellung des Programmierwettbewerbs liegt in Anhang \ref{intel_ayc_problem} bei. Die Quelltexte beider
+Programme liegen dieser Arbeit auf Datenträger bei.
 
 \subsection{Auftretende Probleme}
 
