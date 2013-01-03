@@ -13,6 +13,7 @@
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
 
     <link href="css/screen.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
     
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -27,62 +28,148 @@
 
 <div id="impress">
 
-		<div id="map" class="step" data-x="0" data-y="0" data-scale="10">
-			
+		<div id="map" class="step" data-x="0" data-y="-2000" data-scale="10">
+			<h1>Parallelisierung mit OpenMP</h1>
+			Oliver <b>Erxleben</b>, Martin <b>Helmich</b>
 		</div>
 		
-    <div id="intro" class="step" data-x="0" data-y="0" data-scale="5">
-			
-        <p>OpenMP</p>
+    <div id="intro" class="step" data-x="-2000" data-y="1000" data-scale="5" data-rotate="-5">
+        <p>Einführung in OpenMP</p>
     </div>
 		
-		<div id="intro_slide1" class="step slide" data-x="0" data-y="0" data-scale="1">
-			<h2><strong>OpenMP - Einführung</strong></h2>
-			<br /><br />
-			<p>
-				<ul>
-					<li>Programmierschnittstelle für C/C++ und Fortran </li><br />
-					<li>seit 1997 entwickelt, von den gängigen Mainstream-Compilern integriert</li><br />
-					<li>besteht aus: Bibliotheksfunktionen, Umgebungsvariablen und Compilerdirektiven</li>
-				</ul>	
-			</p>
-		</div>
-		
-		<div id="intro_slide2" class="step slide" data-x="1150" data-y="0" data-scale="1">
-			<p><strong>Hello World - Beispiel</strong></p>
-		</div>
-		
-		<div id="intro_slide3" class="step slide" data-x="2300" data-y="0" data-scale="1">
-			<p>lorem</p>
-		</div>
-		
-		<div id="compare" class="step" data-x="3000" data-y="2500" data-scale="5" data-rotate="90">
-			Reimplementierung
-		</div>
-		
-		<div id="compare_slide1" class="step slide" data-x="2400" data-y="1150" data-scale="1" data-rotate="90">
-            <strong>Reimplementierung</strong>
-            <br>
-            <br>
-            Aufgabe: <br>
-            Reimplementierung der Aufgabe aus dem Intel-Programmierwettbewerb mittels OpenMP
-            <br>
-            <br>
-            Grundlage: <br>
-            Eigene optimierte Version
+	<div id="intro_slide1" class="step slide" data-x="0" data-y="800" data-scale="1" data-rotate="-5">
+		<h2><strong>OpenMP - Einführung</strong></h2>
+		<br /><br />
+		<p>
+			<ul>
+				<li>Programmierschnittstelle für C/C++ und Fortran </li><br />
+				<li>seit 1997 entwickelt, von den gängigen Mainstream-Compilern integriert</li><br />
+				<li>besteht aus: Bibliotheksfunktionen, Umgebungsvariablen und Compilerdirektiven</li>
+			</ul>	
+		</p>
+	</div>
+	
+	<div id="intro_slide2" class="step slide" data-x="1150" data-y="700" data-scale="1" data-rotate="-5">
+		<p>lorem</p>
+	</div>
+	
+	<div id="intro_slide3" class="step slide" data-x="2300" data-y="600" data-scale="1" data-rotate="-5">
+		<p>lorem</p>
+	</div>
+	
+	<div id="compare" class="step" data-x="-2000" data-y="2500" data-scale="5" data-rotate="5">
+		<h1>OpenMP vs. TBB</h1>
+	</div>
+	
+	<div id="compare_slide1" class="step slide" data-x="0" data-y="2600" data-scale="1" data-rotate="5">
+		<h1 style="font-size: 280%; margin-top: 3em; margin-bottom: 0.5em">Ausgangsproblem</h1>
+		<b>Work-Hard/Play-Hard</b>-Problem
+	</div>
+	
+	<div id="compare_slide2" class="step" data-x="1150" data-y="2700" data-scale="1" data-rotate="5">
+		<h1 style="font-size: 150%; line-height: 90%"><b>Probleme</b> bei der Portierung</h1>
+	</div>
+	
+	<div id="compare_slide3" class="step" data-x="800" data-y="3000" data-scale="0.5" data-rotate="100">
+		<b>parallel_do</b> und<br /><b>parallel_reduce</b>
+	</div>
+	
+	<div id="compare_slide4" class="step" data-x="1000" data-y="3020" data-scale="0.5" data-rotate="95">
+		Tasks
+	</div>
+	
+	<div id="compare_slide5" class="step" data-x="1200" data-y="3040" data-scale="0.5" data-rotate="90">
+		Datenstrukturen
+	</div>
+	
+	<div id="results_1" class="step" data-x="2300" data-y="2800" data-scale="1" data-rotate="5">
+		<h1 style="font-size: 150%; line-height: 90%"><b>Ergebnisse</b></h1>
+	</div>
+	
+	<div id="results_2" class="step slide" data-x="1990" data-y="3020" data-scale="0.25" data-rotate="0">
+		<h1><b>Laufzeit</b> bei 5.000.000 Flügen</h1>
+		<img src="../hausarbeit/messdaten/s13_runtime.png" style="width:100%" />
+	</div>
+	
+	<div id="results_3" class="step slide" data-x="2300" data-y="3020" data-z="-70" data-scale="0.25" data-rotate="0" data-rotate-y="30">
+		<h1><b>Speed-Up</b> bei 5.000.000 Flügen</h1>
+		<img src="../hausarbeit/messdaten/s13_speedup.png" style="width:100%" />
+	</div>
+	
+	<div id="results_4" class="step slide" data-x="2500" data-y="3020" data-z="-250" data-scale="0.25" data-rotate="0" data-rotate-y="60">
+		<h1><b>Effizienz</b> bei 5.000.000 Flügen</h1>
+		<img src="../hausarbeit/messdaten/s13_efficiency.png" style="width:100%" />
+	</div>
+	
+	<div id="results_5" class="step" data-x="2300" data-y="2730" data-scale="0.25" data-rotate="-85">
+		OpenMP erreicht einen bis zu <b>9,66% höheren Speed-Up</b> als die TBB.
+	</div>
+	
+	<div id="results_6" class="step slide" data-x="2320" data-y="2480" data-z="-300" data-scale="0.075" data-rotate="-175">
+		<h1>OpenMP</h1>
+		<div class="cons">
+			<div class="con">&minus;</div> <div class="point">Geringer Sprachumfang<small>(Ergänzung durch andere Bibliotheken, z.B. TBB oder Boost)</small></div>
 		</div>
 
-        <div id="compare_slide2" class="step slide" data-x="2400" data-y="2300" data-scale="1" data-rotate="90">
-
-        </div>
-
-		<div id="sources" class="step slide" data-x="0" data-y="0" data-z="-2000" data-scale="1" data-rotate-x="-90">
-			<strong>Quellen</strong>
-			<br />
-			<br />
-			OpenMP - Eine Einführung in die parallele Programmierung mit C/C++
+		<div class="pros">
+			<div class="pro">+</div> <div class="point">Schneller</div>
+			<div class="pro">+</div> <div class="point">Einfach handhabbar</div>
+			<div class="pro">+</div> <div class="point">Auch für C und Fortran</div>
 		</div>
-    </div>
+					
+		<h1>TBB</h1>
+		<div class="cons">
+			<div class="con">&minus;</div> <div class="point">Nur für C++</div>
+			<div class="con">&minus;</div> <div class="point">Umständlich, Wartbarkeit <small>Function Objects sorgen für schwer lesbaren Code</small></div>
+		</div>
+		<div class="pros">
+			<div class="pro">+</div> <div class="point">Höherer Sprachumfang <small>parallel_do und parallel_reduce</small></div>
+			<div class="pro">+</div> <div class="point">Threadsichere Datenstrukturen <small>concurrent_{hash_map,vector,...}}</small></div>
+		</div>
+	</div>
+	
+	<div id="literature" class="step slide" data-x="0" data-y="0" data-z="-2000" data-scale="1" data-rotate-x="-90">
+		<h1>Quellen</h1>
+		<ul>
+			<li>
+				<b>Ayguadé, Eduard et al.</b>: <i>The Design of OpenMP Tasks.</i>
+				In: IEEE Transactions on Parallel and Distributed Systems 20 2009, Nr. 3, 404–418
+				(<a href="http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=4553700">URL</a>)
+				– Zugriff am 27. 12. 2012.
+			</li><li>
+				<b>Bengel, Günther et al.</b>: <i>Masterkurs Parallele und Verteilte Systeme: Grundlagen
+				und Programmierung von Multicoreprozessoren, Multiprozessoren, Cluster und
+				Grid</i>. 1. Auflage. Wiesbaden : Vieweg & Teubner Verlag, Juni 2008, ISBN 978–
+				3–8348–0394–4.
+			</li>
+			<li>
+				<b>Duran, Alejandro</b>: <i>Tasking in OpenMP</i>. Juni 2009 (URL: https://iwomp.zih.
+				tu-dresden.de/downloads/omp30-tasks.pdf) – Zugriff am 28. 12. 2012.
+			</li>
+			<li>
+				<b>Hoffmann, S. und Lienhart, R</b>: <i>OpenMP - Eine Einführung in die parallele Programmierung mit C/C++</i>. Springer, 2008.
+			</li>
+			<li>
+				<b>Intel</b>: <i>Cook Until Done: parallel_do</i>. 2012a (<a href="http://software.intel.com/sites/products/documentation/doclib/tbb_sa/help/tbb_userguide/Cook_Until_Done_parallel_do.htm">URL</a>) – Zugriff am 27. 12. 2012.
+			</li>
+			<li>
+				<b>Intel</b>: <i>Mixing With Other Threading Packages</i>. 2012b (<a href="http://software.intel.com/sites/products/documentation/doclib/tbb_sa/help/tbb_userguide/appendix_B.htm">URL</a>) – Zugriff am 2012-12-28.
+			</li>
+			<li>
+				<b>Microsoft</b>: <i>OpenMP in Visual C++</i>. 2012 (<a href="http://msdn.microsoft.com/en-us/library/tt15eb9t.aspx">URL</a>) – Zugriff am 2012-12-27.
+			</li>
+			<li>
+				<b>openmp.org</b>: <i>OpenMP.org: OpenMP Compilers</i>. 2012a (<a href="http://openmp.org/wp/openmp-compilers/">URL</a>) – Zugriff am 2012-12-27.
+			</li>
+			<li>
+				<b>openmp.org</b>: <i>OpenMP.org: OpenMP Specifications</i>. 2012b (<a href="http://openmp.org/wp/openmp-specifications/">URL</a>) – Zugriff am 2012-12-27.
+			</li>
+			<li>
+				<b>Rauber, Thomas und Rünger, Gudula</b>: <i>Parallel Programming for Multicore and
+				Cluster Systems</i>. 1. Auflage. Berlin : Springer, März 2010, ISBN 978–3642048173.
+			</li>
+		</ul>
+	</div>
 		
 <div class="hint">
     <p>Use a spacebar or arrow keys to navigate</p>
