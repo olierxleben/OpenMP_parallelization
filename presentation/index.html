@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
     <meta name="viewport" content="width=1024" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>impress.js | presentation tool based on the power of CSS3 transforms and transitions in modern browsers | by Bartek Szopka @bartaz</title>
+    <title>OpenMP</title>
     
     <meta name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com." />
     <meta name="author" content="Bartek Szopka" />
@@ -14,7 +14,9 @@
 
     <link href="css/screen.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
-    
+    <link rel="stylesheet" href="css/shCore.css" />
+		<link rel="stylesheet" href="css/shThemeDefault.css" />
+		
     <link rel="shortcut icon" href="favicon.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 </head>
@@ -24,6 +26,17 @@
 <div class="fallback-message">
     <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
     <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="topleft">
+	<img src="img/hs_os.png" alt="" width="200" /> <br />
+	<br />
+	Parallele und Verteilte Algorthimen <br />
+	Wintersemester 2012/13 <br />
+	<br />
+	Oliver Erxleben <br />
+	Martin Helmich
+	
 </div>
 
 <div id="impress">
@@ -37,24 +50,85 @@
         <p>Einführung in OpenMP</p>
     </div>
 		
-	<div id="intro_slide1" class="step slide" data-x="0" data-y="800" data-scale="1" data-rotate="-5">
+	<div id="intro_slide1" class="step slide" data-x="0" data-y="900" data-scale="1" data-rotate="-5">
 		<h2><strong>OpenMP - Einführung</strong></h2>
 		<br /><br />
 		<p>
 			<ul>
 				<li>Programmierschnittstelle für C/C++ und Fortran </li><br />
-				<li>seit 1997 entwickelt, von den gängigen Mainstream-Compilern integriert</li><br />
-				<li>besteht aus: Bibliotheksfunktionen, Umgebungsvariablen und Compilerdirektiven</li>
+				<li>seit 1997 entwickelt</li><br />
+				<li>Klassifikation nach Flynn: SPMD</li><br />
+				<li>von den gängigen Mainstream-Compilern integriert</li><br />
+				<li>besteht aus Bibliotheksfunktionen, Umgebungsvariablen und Compilerdirektiven</li><br />
+				<li>hoher Abstraktionsgrad</li>
 			</ul>	
 		</p>
 	</div>
 	
-	<div id="intro_slide2" class="step slide" data-x="1150" data-y="700" data-scale="1" data-rotate="-5">
-		<p>lorem</p>
+	<div id="intro_slide2" class="step slide" data-x="1150" data-y="800" data-scale="1" data-rotate="-5">
+		<h1><strong>Ausführungsmodell</strong></h1>
+		<br />
+		<br />
+		parallele Ausführung erfolgt nach dem Fork-Join-Modell <br />
+		<img src="img/fork_join.png" alt="" /> <br />
+		<br />
+		Threads stellen einen Kontrollfluss mit gemeinsamen Adressraum dar <br /> <br />
+		Ende von parallenen Abschnitten dienen zudem als Synchronisationspunkte
 	</div>
 	
-	<div id="intro_slide3" class="step slide" data-x="2300" data-y="600" data-scale="1" data-rotate="-5">
-		<p>lorem</p>
+	<div id="intro_slide3" class="step slide" data-x="2300" data-y="700" data-scale="1" data-rotate="-5">
+		<p><strong>Hello World I</strong></p>
+		<br /> 
+		<br />
+		
+		<pre class="brush: cpp">
+#include &lt;stdio.h&gt;
+#include &lt;omp.h&gt;
+
+int main(int argc, char *argv[]) {
+	#pragma omp parallel 
+	{
+		int i;
+		for (i = 0; i < 10; i++) { 
+			/* some block code */ 
+		}
+	}
+	return 0;
+}
+</pre>
+		
+	</div>
+	
+	<div id="intro_slide4" class="step slide" data-x="3450" data-y="600" data-scale="1" data-rotate="-5">
+		<p><strong>Hello World II</strong></p>
+		<pre class="code brush: cpp">
+#include &lt;stdio.h&gt;
+#include &lt;omp.h&gt;
+
+int main(int argc, char *argv[]) {
+
+	int tid;
+	#pragma omp parallel private(tid)
+	{
+		int i;
+		#pragma omp for
+		{
+			for (i = 0; i < 10; i++) { 
+				tid = omp_get_thread_num();
+				printf("%i,from %i\n",i,tid);
+			}
+		}
+	}
+	return 0;
+}
+</pre>
+	</div>
+	
+	<div id="intro_slide5" class="step slide" data-x="4600" data-y="500" data-scale="1" data-rotate="-5">
+		<p>Hello Tasks</p>
+		<div class="code">
+			
+		</div>
 	</div>
 	
 	<div id="compare" class="step" data-x="-2000" data-y="2500" data-scale="5" data-rotate="5">
@@ -180,6 +254,8 @@ if ("ontouchstart" in document.documentElement) {
 }
 </script>
 <script src="js/impress.js"></script>
-<script>impress().init();</script>
+<script src="js/shCore.js"></script>
+<script src="js/shBrushCpp.js"></script>
+<script>SyntaxHighlighter.all(); impress().init();</script>
 </body>
 </html>
