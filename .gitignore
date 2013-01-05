@@ -5,4 +5,5 @@ hausarbeit/tex/*.pdf
 
 hausarbeit/src/1_3_example/test
 
-*.idea 
+*.idea
+*.idea/*
