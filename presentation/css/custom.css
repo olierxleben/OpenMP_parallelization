@@ -17,3 +17,7 @@ body { /*background: white;*/ }
 #literature h1 { font-weight: bold; font-size: 180%; margin: 1em 0em; }
 #literature ul { font-size: 60%; line-height: 100%; }
 #literature ul li { margin-top: 1em; }
+
+.code { font-size:small;}
+
+#topleft { margin: 10px;}

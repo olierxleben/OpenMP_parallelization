@@ -4,3 +4,6 @@ hausarbeit/tex/*.pdf
 *.o
 
 hausarbeit/src/1_3_example/test
+
+*.idea
+*.idea/*
