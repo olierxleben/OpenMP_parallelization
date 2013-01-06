@@ -20,4 +20,6 @@ body { /*background: white;*/ }
 
 .code { font-size:small;}
 
-#topleft { margin: 10px;}
+#topleft { float:right; text-align: right; margin: 10px; opacity: 0.5; }
+
+small { font-size: 70%; }
