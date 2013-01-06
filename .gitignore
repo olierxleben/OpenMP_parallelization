@@ -7,3 +7,9 @@ hausarbeit/src/1_3_example/test
 
 *.idea
 *.idea/*
+hausarbeit/tex/main.lof
+hausarbeit/tex/main.lot
+hausarbeit/tex/main.maf
+hausarbeit/tex/main.mtc
+hausarbeit/tex/main.mtc0
+hausarbeit/tex/main.out
