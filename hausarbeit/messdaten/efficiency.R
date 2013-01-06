@@ -22,12 +22,13 @@ cat("Sequential runtime (TBB):", tbb_rseq, "\n")
 
 setOutput()
 
-plot(omp$Threads, (omp_rseq/omp$Walltime)/omp$Threads, col="red", ylim=c(0, 1.2), xlab="Threads", ylab="Effizienz", lwd=out.lwd)
+plot(omp$Threads, (omp_rseq/omp$Walltime)/omp$Threads, col="red", ylim=c(0, 1.2), xlab="Threads", ylab="Effizienz", lwd=out.lwd, xaxt="n")
 points(tbb$Threads, (tbb_rseq/tbb$Walltime)/tbb$Threads, col="blue", pch=2, lwd=out.lwd)
 
 omp_ideal <- function(x) 0*x + 1
 curve(omp_ideal, add=TRUE, col="green", lty=2, lwd=out.lwd)
 
+axis(1, at=c(1,1:6*4))
 legend(x="topright", legend=c("OMP","TBB","Ideal"), col=c("red","blue","green"), pch=c(1,2,-1), lty=c(-1,-1,2), bg="white", lwd=out.lwd)
 
 resetOutput();
