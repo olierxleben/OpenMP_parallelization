@@ -131,44 +131,43 @@ int main(int argc, char *argv[]) {
 #include &lt;omp.h&gt;
 
 #define NUM_THREADS 4
-#define NUM_TASKS 10
 
-int task_index = 0;
-
-int nextTask() 
+int fib(int n)
 {
-	int t = -1;
-	#pragma omp critical (nextTask)
+  int i, j, r;
+  if (n<2)
+		return n;
+	else
 	{
-		if (task_index < NUM_TASKS) { t = task_index++; }
+	 	#pragma omp task shared(i) firstprivate(n)
+			i=fib(n-1);					
+		
+		#pragma omp task shared(j) firstprivate(n)
+			j=fib(n-2);
+		
+		#pragma omp taskwait
+			return i + j;
 	}
-	return t;
 }
-
-void runTask(int task) 
-{
-	// do sth.
-}
-			
 		</pre>
 	</div>
 	
 	<div id="intro_slide6" class="step slide" data-x="5750" data-y="400" data-scale="1" data-rotate="-5">
 		<strong>Hello Tasks (2)</strong>
 		<pre class="brush: cpp">
-int main(int argc, char *argv[])
-{	
-	#pragma omp parallel num_threads(NUM_THREADS) 
-	{
-		int task = nextTask();
-		while (task != -1) 
-		{
-			runTask(task);
-			task = nextTask();
-		}
+int main()
+{
+  int n = 10;
+
+  omp_set_dynamic(0);
+  omp_set_num_threads(NUM_THREADS);
+
+  #pragma omp parallel shared(n)
+  {
+    #pragma omp single
+    printf ("\n fib von n = %d => %d\n", n, fib(n));
 	}
-	return 0;
-}			
+}
 		</pre>
 	</div>
 	
