@@ -125,10 +125,51 @@ int main(int argc, char *argv[]) {
 	</div>
 	
 	<div id="intro_slide5" class="step slide" data-x="4600" data-y="500" data-scale="1" data-rotate="-5">
-		<p>Hello Tasks</p>
-		<div class="code">
+		<strong>Hello Tasks</strong>
+		<pre class="brush: cpp">
+#include &lt;stdio.h&gt;
+#include &lt;omp.h&gt;
+
+#define NUM_THREADS 4
+#define NUM_TASKS 10
+
+int task_index = 0;
+
+int nextTask() 
+{
+	int t = -1;
+	#pragma omp critical (nextTask)
+	{
+		if (task_index < NUM_TASKS) { t = task_index++; }
+	}
+	return t;
+}
+
+void runTask(int task) 
+{
+	// do sth.
+}
 			
-		</div>
+		</pre>
+	</div>
+	
+	<div id="intro_slide6" class="step slide" data-x="5750" data-y="400" data-scale="1" data-rotate="-5">
+		<strong>Hello Tasks (2)</strong>
+		<pre class="brush: cpp">
+int main(int argc, char *argv[])
+{	
+	#pragma omp parallel num_threads(NUM_THREADS) 
+	{
+		int task = nextTask();
+		while (task != -1) 
+		{
+			runTask(task);
+			task = nextTask();
+		}
+	}
+	return 0;
+}			
+		</pre>
 	</div>
 	
 	<div id="compare" class="step" data-x="-2000" data-y="2500" data-scale="5" data-rotate="5">
