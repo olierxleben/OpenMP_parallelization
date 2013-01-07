@@ -1,0 +1,25 @@
+#map h1 { font-size: 180%; line-height: 90%; margin-bottom: 1em; }
+body { /*background: white;*/ }
+
+.s180 { font-size: 180%; }
+
+.pro, .con { font-weight: bold; float:left; }
+.pro { color: #008000; }
+.con { color: #800000; }
+
+#results_6 h1 { font-weight: bold; font-size: 180%; margin: 1em 0em; }
+
+.cons, .pros { width: 50%; }
+.cons { float: right; }
+.cons > .point, .pros > .point { margin-left: 24px; line-height: 100%; margin-bottom: 0.5em; }
+.cons small, .pros small { display: block; font-size: 70%; line-height: 100%; }
+
+#literature h1 { font-weight: bold; font-size: 180%; margin: 1em 0em; }
+#literature ul { font-size: 60%; line-height: 100%; }
+#literature ul li { margin-top: 1em; }
+
+.code { font-size:small;}
+
+#topleft { float:right; text-align: right; margin: 10px; opacity: 0.5; }
+
+small { font-size: 70%; }

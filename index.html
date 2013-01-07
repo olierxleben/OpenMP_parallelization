@@ -1,1 +1,328 @@
-My GitHub Page
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Parallelisierung mit OpenMP</title>
+    
+    <meta name="description" content="Parallelisierung mit OpenMP" />
+    <meta name="author" content="Oliver Erxleben, Martin Helmich" />
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+
+    <link href="css/screen.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/shCore.css" />
+		<link rel="stylesheet" href="css/shThemeDefault.css" />
+		
+    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+</head>
+
+<body class="impress-not-supported">
+
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+    <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="topleft">
+	<img src="img/hs_os.png" alt="" width="200" /> <br />
+	<br />
+	Parallele und Verteilte Algorithmen <br />
+	Wintersemester 2012/13 <br />
+	<br />
+	Oliver Erxleben <br />
+	Martin Helmich
+	
+</div>
+
+<div id="impress">
+
+		<div id="map" class="step" data-x="0" data-y="-2000" data-scale="10">
+			<h1>Parallelisierung mit OpenMP</h1>
+			Oliver <b>Erxleben</b>, Martin <b>Helmich</b>
+		</div>
+		
+    <div id="intro" class="step" data-x="-2000" data-y="1000" data-scale="5" data-rotate="-5">
+        <p>Einführung in OpenMP</p>
+    </div>
+		
+	<div id="intro_slide1" class="step slide" data-x="0" data-y="900" data-scale="1" data-rotate="-5">
+		<h2><strong>OpenMP - Einführung</strong></h2>
+		<br /><br />
+		<p>
+			<ul>
+				<li>Programmierschnittstelle für C/C++ und Fortran </li><br />
+				<li>seit 1997 entwickelt</li><br />
+				<li>Klassifikation nach Flynn: SPMD</li><br />
+				<li>von den gängigen Mainstream-Compilern integriert</li><br />
+				<li>besteht aus Bibliotheksfunktionen, Umgebungsvariablen und Compilerdirektiven</li><br />
+				<li>hoher Abstraktionsgrad</li>
+			</ul>	
+		</p>
+	</div>
+	
+	<div id="intro_slide2" class="step slide" data-x="1150" data-y="800" data-scale="1" data-rotate="-5">
+		<h1><strong>Ausführungsmodell</strong></h1>
+		<br />
+		<br />
+		parallele Ausführung erfolgt nach dem Fork-Join-Modell <br />
+		<img src="img/fork_join.png" alt="" /> <br />
+		<br />
+		Threads stellen einen Kontrollfluss mit gemeinsamen Adressraum dar <br /> <br />
+		Ende von parallenen Abschnitten dienen zudem als Synchronisationspunkte
+	</div>
+	
+	<div id="intro_slide3" class="step slide" data-x="2300" data-y="700" data-scale="1" data-rotate="-5">
+		<p><strong>Hello World I</strong></p>
+		<br /> 
+		<br />
+		
+		<pre class="brush: cpp">
+#include &lt;stdio.h&gt;
+#include &lt;omp.h&gt;
+
+int main(int argc, char *argv[]) {
+	#pragma omp parallel 
+	{
+		int i;
+		for (i = 0; i < 10; i++) { 
+			/* some block code */ 
+		}
+	}
+	return 0;
+}
+</pre>
+		
+	</div>
+	
+	<div id="intro_slide4" class="step slide" data-x="3450" data-y="600" data-scale="1" data-rotate="-5">
+		<p><strong>Hello World II</strong></p>
+		<pre class="code brush: cpp">
+#include &lt;stdio.h&gt;
+#include &lt;omp.h&gt;
+
+int main(int argc, char *argv[]) {
+
+	int tid;
+	#pragma omp parallel private(tid)
+	{
+		int i;
+		#pragma omp for
+		{
+			for (i = 0; i < 10; i++) { 
+				tid = omp_get_thread_num();
+				printf("%i,from %i\n",i,tid);
+			}
+		}
+	}
+	return 0;
+}
+</pre>
+	</div>
+	
+	<div id="intro_slide5" class="step slide" data-x="4600" data-y="500" data-scale="1" data-rotate="-5">
+		<strong>Hello Tasks</strong>
+		<pre class="brush: cpp">
+#include &lt;stdio.h&gt;
+#include &lt;omp.h&gt;
+
+#define NUM_THREADS 4
+
+int fib(int n)
+{
+  int i, j, r;
+  if (n<2)
+		return n;
+	else
+	{
+	 	#pragma omp task shared(i) firstprivate(n)
+			i=fib(n-1);					
+		
+		#pragma omp task shared(j) firstprivate(n)
+			j=fib(n-2);
+		
+		#pragma omp taskwait
+			return i + j;
+	}
+}
+		</pre>
+	</div>
+	
+	<div id="intro_slide6" class="step slide" data-x="5750" data-y="400" data-scale="1" data-rotate="-5">
+		<strong>Hello Tasks (2)</strong>
+		<pre class="brush: cpp">
+int main()
+{
+  int n = 10;
+
+  omp_set_num_threads(NUM_THREADS);
+
+  #pragma omp parallel shared(n)
+  {
+    #pragma omp single
+    printf ("\n fib von n = %d => %d\n", n, fib(n));
+	}
+}
+		</pre>
+	</div>
+	
+	<div id="compare" class="step" data-x="-2000" data-y="2500" data-scale="5" data-rotate="5">
+		<h1>OpenMP vs. TBB</h1>
+	</div>
+	
+	<div id="compare_slide1" class="step slide" data-x="0" data-y="2600" data-scale="1" data-rotate="5">
+		<h1 style="font-size: 280%; margin-top: 3em; margin-bottom: 0.5em">Ausgangsproblem</h1>
+		<b>Work-Hard/Play-Hard</b>-Problem
+	</div>
+	
+	<div id="compare_slide2" class="step" data-x="1150" data-y="2700" data-scale="1" data-rotate="5">
+		<h1 style="font-size: 150%; line-height: 90%"><b>Probleme</b> bei der Portierung</h1>
+	</div>
+	
+	<div id="compare_slide3" class="step" data-x="800" data-y="3000" data-scale="0.5" data-rotate="100">
+		<b>parallel_do</b> und<br /><b>parallel_reduce</b>
+	</div>
+	
+	<div id="compare_slide4" class="step" data-x="1000" data-y="3020" data-scale="0.5" data-rotate="95">
+		Tasks
+	</div>
+	
+	<div id="compare_slide5" class="step" data-x="1200" data-y="3040" data-scale="0.5" data-rotate="90">
+		Datenstrukturen
+	</div>
+	
+	<div id="results_1" class="step" data-x="2300" data-y="2800" data-scale="1" data-rotate="5">
+		<h1 style="font-size: 150%; line-height: 90%"><b>Ergebnisse</b></h1>
+	</div>
+	
+	<div id="results_2" class="step slide" data-x="1990" data-y="3020" data-scale="0.25" data-rotate="0">
+		<h1><b>Laufzeit</b> bei 5.000.000 Flügen</h1>
+		<img src="../hausarbeit/messdaten/s13_runtime.png" style="width:100%" />
+	</div>
+	
+	<div id="results_3" class="step slide" data-x="2300" data-y="3020" data-z="-70" data-scale="0.25" data-rotate="0" data-rotate-y="30">
+		<h1><b>Speed-Up</b> bei 5.000.000 Flügen</h1>
+		<img src="../hausarbeit/messdaten/s13_speedup.png" style="width:100%" />
+	</div>
+	
+	<div id="results_4" class="step slide" data-x="2500" data-y="3020" data-z="-250" data-scale="0.25" data-rotate="0" data-rotate-y="60">
+		<h1><b>Effizienz</b> bei 5.000.000 Flügen</h1>
+		<img src="../hausarbeit/messdaten/s13_efficiency.png" style="width:100%" />
+	</div>
+	
+	<div id="results_5" class="step" data-x="2300" data-y="2730" data-scale="0.25" data-rotate="-85">
+		OpenMP erreicht einen bis zu <b>9,66% höheren Speed-Up</b> als die TBB.
+	</div>
+	
+	<div id="results_6" class="step slide" data-x="2320" data-y="2480" data-z="-300" data-scale="0.075" data-rotate="-175">
+		<h1>OpenMP</h1>
+		<div class="cons">
+			<div class="con">&minus;</div> <div class="point">Geringer Sprachumfang<small>(Ergänzung durch andere Bibliotheken, z.B. TBB oder Boost)</small></div>
+		</div>
+
+		<div class="pros">
+			<div class="pro">+</div> <div class="point">Schneller</div>
+			<div class="pro">+</div> <div class="point">Einfach handhabbar</div>
+			<div class="pro">+</div> <div class="point">Auch für C <small>(Und Fortran!)</small></div>
+		</div>
+					
+		<h1>TBB</h1>
+		<div class="cons">
+			<div class="con">&minus;</div> <div class="point">Nur für C++</div>
+			<div class="con">&minus;</div> <div class="point">Umständlich, Wartbarkeit <small>Function Objects sorgen für schwer lesbaren Code</small></div>
+		</div>
+		<div class="pros">
+			<div class="pro">+</div> <div class="point">Höherer Sprachumfang <small>parallel_do und parallel_reduce</small></div>
+			<div class="pro">+</div> <div class="point">Threadsichere Datenstrukturen <small>concurrent_{hash_map,vector,...}}</small></div>
+		</div>
+	</div>
+	
+	<div id="questions" class="step" data-x="2320" data-y="2500" data-z="-500" data-scal="1" data-rotate="-265">
+		Fragen?
+	</div>
+	
+	<div id="literature" class="step slide" data-x="4000" data-y="-2000" data-scale="1" data-rotate="-90">
+		<h1>Quellen</h1>
+		<ul>
+			<li>
+				<b>Ayguadé, Eduard et al.</b>: <i>The Design of OpenMP Tasks.</i>
+				In: IEEE Transactions on Parallel and Distributed Systems 20 2009, Nr. 3, 404–418
+				(<a href="http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=4553700">URL</a>)
+				– Zugriff am 27. 12. 2012.
+			</li><li>
+				<b>Bengel, Günther et al.</b>: <i>Masterkurs Parallele und Verteilte Systeme: Grundlagen
+				und Programmierung von Multicoreprozessoren, Multiprozessoren, Cluster und
+				Grid</i>. 1. Auflage. Wiesbaden : Vieweg & Teubner Verlag, Juni 2008, ISBN 978–
+				3–8348–0394–4.
+			</li>
+			<li>
+				<b>Duran, Alejandro</b>: <i>Tasking in OpenMP</i>. Juni 2009 (URL: https://iwomp.zih.
+				tu-dresden.de/downloads/omp30-tasks.pdf) – Zugriff am 28. 12. 2012.
+			</li>
+			<li>
+				<b>Hoffmann, S. und Lienhart, R</b>: <i>OpenMP - Eine Einführung in die parallele Programmierung mit C/C++</i>. Springer, 2008.
+			</li>
+			<li>
+				<b>Intel</b>: <i>Cook Until Done: parallel_do</i>. 2012a (<a href="http://software.intel.com/sites/products/documentation/doclib/tbb_sa/help/tbb_userguide/Cook_Until_Done_parallel_do.htm">URL</a>) – Zugriff am 27. 12. 2012.
+			</li>
+			<li>
+				<b>Intel</b>: <i>Mixing With Other Threading Packages</i>. 2012b (<a href="http://software.intel.com/sites/products/documentation/doclib/tbb_sa/help/tbb_userguide/appendix_B.htm">URL</a>) – Zugriff am 2012-12-28.
+			</li>
+			<li>
+				<b>Microsoft</b>: <i>OpenMP in Visual C++</i>. 2012 (<a href="http://msdn.microsoft.com/en-us/library/tt15eb9t.aspx">URL</a>) – Zugriff am 2012-12-27.
+			</li>
+			<li>
+				<b>openmp.org</b>: <i>OpenMP.org: OpenMP Compilers</i>. 2012a (<a href="http://openmp.org/wp/openmp-compilers/">URL</a>) – Zugriff am 2012-12-27.
+			</li>
+			<li>
+				<b>openmp.org</b>: <i>OpenMP.org: OpenMP Specifications</i>. 2012b (<a href="http://openmp.org/wp/openmp-specifications/">URL</a>) – Zugriff am 2012-12-27.
+			</li>
+			<li>
+				<b>Rauber, Thomas und Rünger, Gudula</b>: <i>Parallel Programming for Multicore and
+				Cluster Systems</i>. 1. Auflage. Berlin : Springer, März 2010, ISBN 978–3642048173.
+			</li>
+		</ul>
+	</div>
+	
+	<div id="extra" class="step slide" data-x="4000" data-y="-3000" data-scale="1" data-rotate="-90">
+		<div style="font-size: 200%; margin-top: 2em; margin-bottom: 1em; line-height: 90%"><strong>Vielen Dank</strong><br />fürs Zuhören!</div>
+		
+		<p>
+			<strong>Quelltexte</strong> Intel Contest:
+			<small><a href="https://github.com/martin-helmich/intel-ayc-2012">https://github.com/martin-helmich/intel-ayc-2012</a></small>
+		</p>
+		
+		<p>
+			<strong>Hausarbeit</strong>
+			<small><a href="https://github.com/olivererxleben/OpenMP_parallelization">https://github.com/olivererxleben/OpenMP_parallelization</a></small>
+		</p>
+		
+		<p style="margin-top: 1em">
+		<strong>Präsentation</strong> <br />
+		impress.js
+		<small><a href="https://github.com/bartaz/impress.js/">https://github.com/bartaz/impress.js</a></small> <br />
+		Syntax Highlighter <small><a href="http://alexgorbatchev.com/SyntaxHighlighter/">http://alexgorbatchev.com/SyntaxHighlighter</a></small>
+		</p>
+		 
+	</div>	
+	
+	<div id="fin" class="step" data-x="0" data-y="-000" data-scale="10" data-rotate="0"></div>
+	
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) { 
+    document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="js/impress.js"></script>
+<script src="js/shCore.js"></script>
+<script src="js/shBrushCpp.js"></script>
+<script>SyntaxHighlighter.all(); impress().init();</script>
+</body>
+</html>
