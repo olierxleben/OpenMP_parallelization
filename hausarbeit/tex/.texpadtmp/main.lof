@@ -1,0 +1,5 @@
+\select@language {ngerman}
+\contentsline {figure}{\numberline {1}{\ignorespaces Fork-Join-Prinzip\relax }}{2}{figure.caption.2}
+\contentsline {figure}{\numberline {2}{\ignorespaces Laufzeitverhalten, bei 5 Mio. Fl\IeC {\"u}gen und 1-24 Threads.\relax }}{7}{figure.caption.3}
+\contentsline {figure}{\numberline {3}{\ignorespaces Parallelisierungsgewinn, bei 5 Mio. Fl\IeC {\"u}gen und 1-24 Threads.\relax }}{7}{figure.caption.4}
+\contentsline {figure}{\numberline {4}{\ignorespaces Effizienz, bei 5 Mio. Fl\IeC {\"u}gen und 1-24 Threads.\relax }}{8}{figure.caption.5}

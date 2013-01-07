@@ -1,0 +1,14 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}OpenMP}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Merkmale von OpenMP}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Ausf\IeC {\"u}hrungsmodell}{1}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Parallelisierung von Schleifen}{2}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Synchronisation}{4}{subsection.1.4}
+\contentsline {section}{\numberline {2}Untersuchung des Laufzeitverhaltens von OpenMP im Vergleich zur Intel TBB}{5}{section.2}
+\contentsline {subsection}{\numberline {2.1}Zielsetzung und Vorgehen}{5}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Auftretende Probleme}{5}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Ergebnisse}{6}{subsection.2.3}
+\contentsline {section}{\numberline {3}Fazit}{8}{section.3}
+\contentsline {section}{Literaturverzeichnis}{11}{section*.8}
+\contentsline {section}{\numberline {A}Aufgabenstellung des Intel Accelerate Your Code-Programmierwettbewerbs}{11}{appendix.A}
+\contentsline {section}{\numberline {B}Messdaten}{12}{appendix.B}
