@@ -159,7 +159,6 @@ int main()
 {
   int n = 10;
 
-  omp_set_dynamic(0);
   omp_set_num_threads(NUM_THREADS);
 
   #pragma omp parallel shared(n)
