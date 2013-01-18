@@ -1,7 +1,4 @@
 %
-% TODO: 
-% Abbildungsreferenzen werden nicht gesetzt!!!!
-% Anhänge referenzieren
 %
 \documentclass[11pt]{scrartcl}
 
@@ -134,11 +131,11 @@ Sofern nicht anders angegeben verwenden alle Threads eines Thread-Teams einen ge
 \includegraphics[width=1.0\textwidth]{img/fork_join.png}
 \label{join_fork_model}
 \caption{Fork-Join-Prinzip}
-\protect{\textit{Entnommen aus OpenMP Tutorial} (siehe \cite{openmptut})}
+\protect{\textit{Entnommen aus OpenMP Tutorial} (siehe \cite{openmptut12})}
 \end{figure} 
 
 \subsection{Parallelisierung von Schleifen} 
-Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\textit{(Vgl. siehe \cite{omp08}, Kapitel 3.1: Parallelität auf Schleifenebene)}
+Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\textit{(Vgl. siehe \cite{openmp08}, Kapitel 3.1: Parallelität auf Schleifenebene)}
 
 Ein team of threads wird mittels \textit{\#pragma omp parallel} gestartet. Zur Veranschaulichung sei das Listing \ref{parallelExample} gegeben. 
 
@@ -156,9 +153,9 @@ Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleif
 \item \textbf{break}-Anweisungen dürfen nicht im Schleifenrumpf verwendet werden. Allerdings kann eine Iteration durch eine \textbf{continue}-Anweisung übergangen werden oder das gesamte Programm mittel \textbf{exit} verlassen werden.
 \end{itemize}
 
-\subsection{Synchronisation} 
+Ein team of threads durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist die Reihenfolge der Bearbeitung der Arbeit nicht "vorhersehbar". Um einen kritischen Adressraum innerhalb eines parallelen Abschnitts zu kennzeichnen, bietet OpenMP ein weitere Direktive an: \textit{\#pragma omp critical \{ ... \}}. Der von der Klammer umschlossene Code wird demnach von nur einem Thread ausgeführt. 
 
-Wie im Kapitel 1.2 bereits erläutert wird ein team of threads durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist die Reihenfolge der Bearbeitung der Arbeit nicht "vorhersehbar". Um einen kritischen Adressraum innerhalb eines parallelen Abschnitts zu kennzeichnen, bietet OpenMP ein weitere Direktive an: \textit{\#pragma omp critical \{ ... \}}. Der von der Klammer umschlossene Code wird demnach von nur einem Thread ausgeführt. 
+\subsection{Tasks}
 
 %\subsection{Abschnitte und Aufgaben}
 
