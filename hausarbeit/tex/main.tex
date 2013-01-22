@@ -150,7 +150,7 @@ Um mittels OpenMP Programme zu parallelisieren und die Parallelisierung zu kontr
 Zum Holen und Setzen von Umgebungsvariablen bietet OpenMP entsprechende Bibliotheksfunktionen. Diese haben auch Vorrang vor den Umgebungsvariablen.\\ Für das Beispiel der Anzahl der Threads kann \texttt{void omp\_set\_num\_threads(int)} zum Setzen der Variablen und \texttt{int omp\_get\_num\_threads()} zum Holen der Variablen verwendet werden.\\
 \\
 Zu beachten ist hier, dass die Portabilität leidet, wenn die Umgebungsvariablen verwendet werden. Compilerdirektiven (siehe nächster Abschnitt) können vom Compiler ignoriert werden, wenn das Programm ohne OpenMP-Unterstützung kompiliert wird. Allerdings können Bibliotheksfunktionen vom Compiler nicht ignoriert werden. \\
-Abhilfe schafft bedingte Kompilierung (\texttt{\#ifdef \_OPENMP}), sodass Aufrufe von Bibliotheksfunktionen nur geschehen wenn mit OpenMP-Unterstützung kompiliert wurde. 
+Abhilfe schafft \textit{Bedingte Kompilierung}\footnote{Bedingte Kompilierung: bietet die Möglichkeit, je nach Gegebenheiten bestimmte Quelltextblöcke von der Kompilierung auszuschließen oder einzubinden. } (\texttt{\#ifdef \_OPENMP}), sodass Aufrufe von Bibliotheksfunktionen nur geschehen wenn mit OpenMP-Unterstützung kompiliert wurde. 
 
 \subsection{Parallelisierung von Schleifen} 
 Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\textit{(Vgl. siehe \cite{openmp08}, Kapitel 3.1: Parallelität auf Schleifenebene)}
@@ -168,7 +168,7 @@ Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleif
 \item Anzahl der Schleifendurchläufe muss berechnbar sein und darf sich innerhalb des Schleifenblocks nicht ändern. Ebenso dürfen sich Start und Endwert während des Schleifendurchlaufs nicht ändern.
 \item Es sind nur boolsche Vergleichoperator im Schleifenkopf erlaubt.
 \item Das Inkrement im Schleifenkopf darf nur aus Addition oder Subtraktion inkrementiert oder dekrementiert werden. 
-\item \textbf{break}-Anweisungen dürfen nicht im Schleifenrumpf verwendet werden. Allerdings kann eine Iteration durch eine \textbf{continue}-Anweisung übergangen werden oder das gesamte Programm mittel \textbf{exit} verlassen werden.
+\item \texttt{break}-Anweisungen dürfen nicht im Schleifenrumpf verwendet werden. Allerdings kann eine Iteration durch eine \textbf{continue}-Anweisung übergangen werden oder das gesamte Programm mittel \textbf{exit} verlassen werden.
 \end{itemize}
 
 Ein team of threads durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist die Reihenfolge der Bearbeitung der Arbeit nicht "vorhersehbar". Um einen kritischen Adressraum innerhalb eines parallelen Abschnitts zu kennzeichnen, bietet OpenMP ein weitere Direktive an: \textit{\#pragma omp critical \{ ... \}}. Der von der Klammer umschlossene Code wird demnach von nur einem Thread ausgeführt. 
