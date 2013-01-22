@@ -84,7 +84,7 @@
 
 % make some space
 \ \\ \\ \ 
-
+\thispagestyle{empty}
 \begin{abstract}
 \textbf{Zusammenfassung:}\\ 
 Die vorliegende Arbeit wurde mit LaTeX verfasst und ist eine gemeinsame Arbeit von Oliver Erxleben und Martin Helmich für das Modul \textit{Parallele und verteilte Algorithmen} aus dem Master-Studiengang \textit{Informatik - Verteilte und Mobile Anwendungen} im Wintersemester 2012/13. \\ 
@@ -97,8 +97,9 @@ Code-Beispiele werden aus Gründen der Lesbarkeit und des Platzverbrauchs in die
 
 \pagebreak
 % set new page style
-\pagestyle{fancy}
+
 % hoooray page 1! begins 
+\pagestyle{fancy}
 \setcounter{page}{1} 
 
 \section{OpenMP} Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle
@@ -132,7 +133,7 @@ Sofern nicht anders angegeben verwenden alle Threads eines Thread-Teams einen ge
 \item \textit{shared}/\textit{private}: Threads können explizit als gemeinsame Variable oder für jeden Thread private Variable deklariert werden.
 \item \textit{firstprivate}/\textit{lastprivate}: Diese Klauseln erlauben die Initialisierung, bzw. Finalisierung der Variable beim Ein- und Austritt in oder aus einem parallen Bereich.
 \item \textit{default}: Das Standardverhalten kann verändert werden. % TODO nochmal prüfen
-\item \textit{reduction}: Eine spezielle gemeinsam genutzte Variable über die mehrere Threads Wrte zusammentragen können.
+\item \textit{reduction}: Eine spezielle gemeinsam genutzte Variable über die mehrere Threads Werte zusammentragen können.
 \end{itemize}
 
 
@@ -157,10 +158,8 @@ Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data 
 
 Ein team of threads wird mittels \textit{\#pragma omp parallel} gestartet. Zur Veranschaulichung sei das Listing \ref{parallelExample} gegeben. 
 
-\lstinputlisting[caption= pragma omp parallel - Beispiel, label=parallelExample]{../src/1_3_example/parallel.c}
 Die For-Schleife in Zeile 8 wird von allen vom System zur Verfügung stehenden Threads ausgeführt. Allerdings teilen sich die Threads nicht die Arbeit, sondern jeder Thread führt die Schleife komplett für sich aus. Um eine Schleife parallel auszuführen, muss über eine weitere Direktive, wie in Listing \ref{parallelForExample} zu sehen, eingefügt werden. 
 
-\lstinputlisting[caption= pragma omp parallel for - Beispiel, label=parallelForExample]{../src/1_3_example/parallelfor.c}
 In diesem Beispiel wird der zu parallelisierende Bereich eine Variable \textit{tid}, die threadId, übergeben. Jeder Thread erhält diese Variable, die nicht gemeinsam genutzt werden kann (private). Mittels \textit{\#pragma omp for} wird dem Compiler mitgeteilt das die darauffolgende Schleife parallel durch das team of threads  im parallelen Bereich ausgeführt werden soll.
 
 Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleifen in kanonischer Form geschrieben sein müssen. Die kanonische Form liegt wenn folgende Bedingungen erfüllt sind: 
@@ -175,13 +174,17 @@ Ein team of threads durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist
 
 \subsection{Sections und Tasks}
 
-Neben der Parallelisierung von Schleifen stellt sich auch die Frage der Arbeitsverteilung mittels OpenMP. 
+Neben der Parallelisierung von Schleifen stellt sich auch die Frage wie nicht-iterative Programmteile parallelisiert werden können und  wie Arbeitsverteilung mittels OpenMP geschieht. OpenMP stellt dafür zweierlei Möglichkeiten zur Verfügung, die sog. \textit{Sections} und \textit{Tasks} (seit OpenMP 3.0). \\
+\\
+Bei den \textbf{Sections} können nicht-iterative und unabhängige Codeteile durch die Direktive \texttt{\#pragma omp sections \{ ... \}} umschlossen werden und jeder zu parallelisierende Abschnitt kann mit \texttt{\#pragma omp section \{ ... \}} markiert werden. Jeder Abschnitt innerhalb des \textit{Sections}-Bereichs wird einmal innerhalb des Thread-Teams ausgeführt. Die Reihenfolge der Abarbeitung kann allerdings nicht beeinflußt werden. OpenMP garantiert das jede \textit{Section} genau einmal von einem Thread ausgeführt wird und das weiterhin Threads am Ende der Direktive synchronisiert werden. Wenn mehr Threads zur Verfügung stehen als Sections zum Abarbeiten definiert wurden, verbleiben unnötige Threads an den Synchronisationspunkten.
 
-\textbf{Sections} sind eine Möglichkeit Aufgaben innerhalb eines Threadteams ohne Schleifen zu verteilten. 
+SIEHE Sections-Beispiel
 
-Das \textbf{Tasks}-Konzept ist die Hauptaktualisierung für OpenMP mit de Release der Version 3.0 gewesen. 
+% TODO: Überarbeiten
+Das \textbf{Tasks}-Konzept ist die größte Erneuerung für OpenMP mit dem Release der Version 3.0. Ein Thread kann einen Task ausführen, sobald dieser auf die Task-Direktive trifft, oder aber er kann den Task für später bereithalten oder an einen anderen Thread abgeben. Im Unterschied zu Sections kann ein Task von jedem Thread im Team definiert werden. Die Definition eines Tasks kann an beliebiger Stelle passieren. Ein beliebiger Thread kann einen Task ausführen. \\
+Mittels der Compilerdirektive \texttt{\#pragma omp task} kann ein Task gestartet werden. 
 
-
+SIEHE Task-Beispiel 
 % TODO: Code Examples 
 
 \pagebreak % first part ends
@@ -380,5 +383,15 @@ Die gemessenen Rohdaten und die R-Skripte zur Auswertung liegen dieser Arbeit au
 	
 %	\bibitem{openmptut} Blaise Barney, Lawrence Livermore National Laboratory: OpenMP Tutorial \\ https://computing.llnl.gov/tutorials/openMP/ \\ \textit{abgerufen am 24.11.2012}
 %\end{thebibliography}
+
+\pagebreak
+\section{Code-Beispiele}
+
+\subsection{}
+
+\lstinputlisting[caption= pragma omp parallel - Beispiel, label=parallelExample]{../src/1_3_example/parallel.c}
+
+\lstinputlisting[caption= pragma omp parallel for - Beispiel, label=parallelForExample]{../src/1_3_example/parallelfor.c}
+
 
 \end{document}
