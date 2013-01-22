@@ -92,7 +92,7 @@ Die vorliegende Arbeit wurde mit LaTeX verfasst und ist eine gemeinsame Arbeit v
 Die Arbeit gliedert sich in zwei Teile. Im ersten Teil wird eine Einführung in OpenMP gegeben. Es werden hier Kernfunktionen der Programmierschnittstelle gezeigt, die Parallelisierung von Schleifen verdeutlicht und auf Verteilung von Aufgaben eingegegangen.\\
 Der zweite Teil zeigt die Optimierung der Parallelisierungsaufgabe aus Intel`s \textit{Accelerate Your Code} von September 2012 mittels OpenMP auf und vergleicht die Ergebnisse mit der Programmierbibliothek \textit{Threading Building Blocks} von Intel.\\
 \\
-Code-Beispiele werden aus Gründen der Lesbarkeit und des Platzverbrauchs in die Anhänge verschoben. An den Stellen wird auf die Source Codes verwiesen. 
+Code-Beispiele werden aus Gründen der Lesbarkeit und des Platzverbrauchs in die Anhänge verschoben. An den Stellen wird auf die Source Codes verwiesen. Die Arbeit betrachtet weiterhin nur OpenMP in Verwendung mit C und C++. Fortran wird nicht behandelt.
 \end{abstract}
 
 \pagebreak
@@ -146,8 +146,11 @@ Sofern nicht anders angegeben verwenden alle Threads eines Thread-Teams einen ge
 
 \subsection{Umgebungsvariablen und Bibliotheksfunktionen}
 
-
-
+Um mittels OpenMP Programme zu parallelisieren und die Parallelisierung zu kontrollieren, können Umgebungsvariablen verwendet werden. Beispielsweise kann die maximale Anzahl der zu verwendenen Threads durch \texttt{OMP\_NUM\_THREADS} verändert werden.\\ 
+Zum Holen und Setzen von Umgebungsvariablen bietet OpenMP entsprechende Bibliotheksfunktionen. Diese haben auch Vorrang vor den Umgebungsvariablen.\\ Für das Beispiel der Anzahl der Threads kann \texttt{void omp\_set\_num\_threads(int)} zum Setzen der Variablen und \texttt{int omp\_get\_num\_threads()} zum Holen der Variablen verwendet werden.\\
+\\
+Zu beachten ist hier, dass die Portabilität leidet, wenn die Umgebungsvariablen verwendet werden. Compilerdirektiven (siehe nächster Abschnitt) können vom Compiler ignoriert werden, wenn das Programm ohne OpenMP-Unterstützung kompiliert wird. Allerdings können Bibliotheksfunktionen vom Compiler nicht ignoriert werden. \\
+Abhilfe schafft bedingte Kompilierung (\texttt{\#ifdef \_OPENMP}), sodass Aufrufe von Bibliotheksfunktionen nur geschehen wenn mit OpenMP-Unterstützung kompiliert wurde. 
 
 \subsection{Parallelisierung von Schleifen} 
 Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\textit{(Vgl. siehe \cite{openmp08}, Kapitel 3.1: Parallelität auf Schleifenebene)}
@@ -292,6 +295,8 @@ Einen Vorteil OpenMPs gegenüber der TBB stellt der -- zwar geringe, aber dennoc
 Zusammenfassend eignet sich OpenMP ausgezeichnet zur Parallelisierung bereits besteh\-enden Codes. Die Compiler-Direktiven sind vergleichweise einfach handhabbar und erhalten die Lesbarkeit des ursprünglichen Quelltextes. Im Unteschied zur TBB beschränkt sich OpenMP zudem nicht auf C++, sondern ermöglicht auch die Parallelisierung von C-oder Fortran-Code.
 
 Da OpenMP jedoch keine geeigneten threadsicheren Datenstrukturen mit sich bringt, empfiehlt sich die Verwendung von OpenMP zusammen mit einer entsprechenden Bibliothek (in C++ beispielsweise die TBB- oder die Boost-Bibliothek).
+
+Kombi mit OpenMPI?
 
 \pagebreak % third part ends
 
