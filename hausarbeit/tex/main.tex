@@ -324,23 +324,27 @@ The goal is to optimize and parallelize for a wide range of use cases (few/many 
 
 \subsection{Grafische Auswertung der Messergebnisse}
 
-\begin{figure}[pbt]
+Dieser Abschnitt enthält eine grafische Auswertung des Laufzeitverhaltens (Abbildung \ref{s13_runtime} auf Seite \pageref{s13_runtime}), der Effizienz (Abbildung \ref{s13_efficiency} auf Seite \pageref{s13_efficiency}) und des Speicherverbrauchs (Abbildung \ref{s14_memory} auf Seite \pageref{s14_memory}).
+
+Die statistische Auswertung und die Erstellung der Grafiken wurde über R-Skripte vorgenommen, die dieser Arbeit auf Datenträger beiliegen.
+
+\begin{figure}[p]
 \centering
-\includegraphics{../messdaten/s13_runtime.pdf}
+\includegraphics[height=5cm]{../messdaten/s13_runtime.pdf}
 \caption{Laufzeitverhalten $T_p(n)$, bei $n=5\cdot 10^6$ und $p \in [1;24]$.}
 \label{s13_runtime}
 \end{figure}
 
-\begin{figure}[pbt]
+\begin{figure}[p]
 \centering
-\includegraphics{../messdaten/s13_efficiency.pdf}
+\includegraphics[height=5cm]{../messdaten/s13_efficiency.pdf}
 \caption{Effizienz $E_p(n)$, bei $n=5\cdot 10^6$ und $p \in [1;24]$.}
 \label{s13_efficiency}
 \end{figure}
 
-\begin{figure}[pbt]
+\begin{figure}[p]
 \centering
-\includegraphics{../messdaten/s14_memory.pdf}
+\includegraphics[height=5cm]{../messdaten/s14_memory.pdf}
 \caption{Speicherverbrauch (Stack und Heap) $M_p(n)$, bei $n=843.074$ und $p \in [1;24]$.}
 \label{s14_memory}
 \end{figure}
@@ -350,6 +354,46 @@ The goal is to optimize and parallelize for a wide range of use cases (few/many 
 Für die Untersuchung des Laufzeitverhaltens wurde jeweils die tatsächliche Laufzeit (\emph{Wall Time}) und die aufgewandte CPU-Zeit gemessen. Die Anzahl der zur Verfügung stehenden Threads wurde von 1 auf 24 erhöht. Um Messfehler und Ausreißer zu vermeiden, wurde jeweils das arithmetische Mittel aus 10 Einzelmessungen gebildet.
 
 Die gemessenen Rohdaten und die R-Skripte zur Auswertung liegen dieser Arbeit auf Datenträger bei.
+
+\subsection{Generierung der Messdaten}
+
+Die gemessenen Daten wurden mit folgenden Bash-Skripten erhoben:
+
+\begin{lstlisting}[language=Bash,caption=Bash-Skript zur Erfassung der Laufzeiten]
+#!/bin/bash
+
+IMP="OMP"
+
+for I in {1..24} ; do
+	for J in {0..9} ; do
+		{ time -p ../../run -nb_threads $I -from C1 -to C100 -departure_time_min 00000000100000 -departure_time_max 00000000450000 -arrival_time_min 00000000550000 -arrival_time_max 00000000900000 -max_layover 1000 -vacation_time_min 50000 -vacation_time_max 200000 -flights flights.txt -alliances alliances.txt -work_hard_file work_hard.txt -play_hard_file play_hard.txt -vacation_airports C{2..51}  ; } 2>&1 | awk "BEGIN { WALL=\"\" ; USER=\"\"; } { if(\$1 == \"real\") WALL=\$2 ; if(\$1 == \"user\") USER=\$2 } END { print \"$IMP;$I;\" WALL \";\" USER \";\" (USER/WALL) }" >> intel-benchmark-13-$(date +%s).csv
+	done
+done
+\end{lstlisting}
+
+\begin{lstlisting}[language=Bash,caption=Bash-Skript zur Erfassung des Speicherverbrauchs]
+#!/bin/bash
+
+IMP="OMP"
+
+for I in {1..24} ; do
+	for J in {0..9} ; do
+		valgrind --tool=massif --depth=1 --heap=yes --stacks=yes --massif-out-file=massif.out ../../run -nb_threads $I -from BOSTON -to MUNICH -departure_time_min 04102012000000 -departure_time_max 04142012000000 -arrival_time_min 05102012000000 -arrival_time_max 05142012000000 -max_layover 10000 -vacation_time_min 500000 -vacation_time_max 700000 -flights flights.txt -alliances alliances.txt -work_hard_file work_hard..txt -play_hard_file play_hard..txt -vacation_airports ATLANTA LONDON\ HEATHROW PHILADELPHIA RIO\ DE\ JANEIRO TORONTO
+		MAXMEM=$(grep mem_heap_B= massif.out -A2 | grep '[0-9]\+' -o | tr "\n" " " | python -c "import sys
+
+a = [int(x) for x in sys.stdin.read().strip().split(' ')]
+v = []
+i = 0
+
+while i < len(a):
+	v.append(a[i] + a[i+1] + a[i+2])
+	i = i + 3
+
+print max(v)")
+		echo "$IMP;$I;$MAXMEM" >> ~/intel-benchmark-mem-14-$(date +%s).csv
+	done
+done
+\end{lstlisting}
 
 %\begin{thebibliography}{3}
 %	\bibitem{omp08} S. Hoffmann, R. Lienhart: OpenMP - Eine Einf{\"u}hrung in die parallele Programmierung in C/C++
