@@ -82,10 +82,18 @@
 \thispagestyle{empty}
 \tableofcontents
 
+% make some space
+\ \\ \\ \ 
+
 \begin{abstract}
-
+\textbf{Zusammenfassung:}\\ 
+Die vorliegende Arbeit wurde mit LaTeX verfasst und ist eine gemeinsame Arbeit von Oliver Erxleben und Martin Helmich für das Modul \textit{Parallele und verteilte Algorithmen} aus dem Master-Studiengang \textit{Informatik - Verteilte und Mobile Anwendungen} im Wintersemester 2012/13. \\ 
+\\
+Die Arbeit gliedert sich in zwei Teile. Im ersten Teil wird eine Einführung in OpenMP gegeben. \\
+Der zweite Teil zeigt die Optimierung der Parallelisierungsaufgabe aus Intel`s \textit{Accelerate Your Code} von September 2012 mittels OpenMP auf und vergleicht die Ergebnisse mit der Programmierbibliothek \textit{Threading Building Blocks} von Intel.\\
+\\
+Code-Beispiele werden aus Gründen der Lesbarkeit und des Platzverbrauchs in die Anhänge verschoben. An den Stellen wird auf die Source Codes verwiesen. 
 \end{abstract}
-
 
 \pagebreak
 % set new page style
@@ -101,6 +109,8 @@ Programmiermodell f"ur Shared-Memory-Architekturen\footnote{Shared-Memory-Archit
 Ein weiteres Plus f"ur den Einsatz von OpenMP ist die weite Verbreitung von Multi-Core-Rechnern und die Implementierung in vielen verbreiteten Compilern. So ist OpenMP im GCC seit der Version 4.2, im Visual Studio C/C++ Compiler seit der Version 2005 oder im Intel C/C++-Compiler seit Version 8 verf"ugbar. Compiler die keine OpenMP-Unterst"utzung bieten, ignorieren aufgrund der Pragma-Compilerdirektiven die Ausf"uhrung als parallelisierte OpenMP-Implementierung, was zu einer guten Portabilität f"uhrt.
 
 Ursprünglich wurde OpenMP für den Bereich High Performance Computing entwickelt, wo Programmcode meist viele Schleifen enthält. Demnach ist die Parallelisierung von Schleifen die Hauptaufgabe von OpenMP und die meisten Vorteile können an dieser Stelle von OpenMP aufgezeigt werden. 
+
+In der aktuellen Version von OpenMP werden allerdings auch noch weitere Sprachkonstrukte angeboten. Zum Beispiel Sections oder Tasks, mit der Arbeit auf mehrere Threads verteilt werden kann.
 % TODO: Beispiel einfügen??
 
 \subsection{Merkmale von OpenMP}
