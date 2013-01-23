@@ -157,7 +157,7 @@ Zu beachten ist hier, dass die Portabilität leidet, wenn die Umgebungsvariablen
 Abhilfe schafft \textit{Bedingte Kompilierung}\footnote{Bedingte Kompilierung: bietet die Möglichkeit, je nach Gegebenheiten bestimmte Quelltextblöcke von der Kompilierung auszuschließen oder einzubinden. } (\texttt{\#ifdef \_OPENMP}), sodass Aufrufe von Bibliotheksfunktionen nur geschehen wenn mit OpenMP-Unterstützung kompiliert wurde. 
 
 \subsection{Parallelisierung von Schleifen} 
-Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\textit{(Vgl. siehe \cite{openmp08}, Kapitel 3.1: Parallelität auf Schleifenebene)}
+Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\footnote{Vgl. \cite{openmp08}, Kapitel 3.1: Parallelität auf Schleifenebene}
 
 Ein team of threads wird mittels \textit{\#pragma omp parallel} gestartet. Zur Veranschaulichung sei das Listing \ref{parallelExample} gegeben. 
 
