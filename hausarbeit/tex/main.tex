@@ -107,6 +107,7 @@ Code-Beispiele werden aus Gründen der Lesbarkeit und des Platzverbrauchs in die
 \section{OpenMP} Open Multi-Processing (kurz: OpenMP) ist eine Programmierschnittstelle
 f"ur die Sprachen C/C++ und Fortran, welche seit 1997 von unterschiedlichen Hardware- und Compilerherstellern
 entwickelt wird. Ziel von OpenMP, welches mittlerweile den Versionsstand 3.1 erreicht hat, ist es ein portables und zugleich paralleles
+% TODO: Fußnote hat keinen Inhalt.
 Programmiermodell f"ur Shared-Memory-Architekturen\footnote{Shared-Memory-Architektur: } zur Verf"ugung zu stellen. Es setzt sich aus Compilerdirektiven, Bibliotheksfunktionen und Umgebungsvariablen zusammen. Anders als viele alternative Ansätze zur Parallelisierung von Programmen sind nur wenige Änderungen an sequenziellen Programmen notwendig um parallele Abläufe zu implementieren. Auch die Lesbarkeit des parallelisierten Quelltextes wird im Vergleich zu anderen alternativen Ansätzen stark verbessert.\footnote{Vgl. \cite{openmp08} }
 
 Ein weiteres Plus f"ur den Einsatz von OpenMP ist die weite Verbreitung von Multi-Core-Rechnern und die Implementierung in vielen verbreiteten Compilern. So ist OpenMP im GCC seit der Version 4.2, im Visual Studio C/C++ Compiler seit der Version 2005 oder im Intel C/C++-Compiler seit Version 8 verf"ugbar. Compiler die keine OpenMP-Unterst"utzung bieten, ignorieren aufgrund der Pragma-Compilerdirektiven die Ausf"uhrung als parallelisierte OpenMP-Implementierung, was zu einer guten Portabilität f"uhrt.
@@ -122,14 +123,12 @@ Mit OpenMP wird ein hoher \textbf{Abstraktionsgrad} erreicht, da Threads nicht d
 
 \subsection{Ausführungsmodell}
 
-Die parallele Ausf"uhrung erfolgt durch Threads auf dem
-Fork-/Join\footnote{Fork/Join:}-Ausf"uhrungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausf"uhrung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die
-Ausf"uhrung in Threads auf. Die erstellten Threads werden als \textit{Threadteam} oder \textit{team of threads}
-bezeichnet\footnote{Die Implementierung von OpenMP entscheidet "uber die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein.}. F"ur OpenMP, bzw. der Entwicklung mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar.
+%TODO: Fußnote hat keinen Inhalt
+Die parallele Ausf"uhrung erfolgt durch Threads auf dem Fork-/Join\footnote{Fork/Join:}-Ausf"uhrungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausf"uhrung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die Ausf"uhrung in Threads auf. Die erstellten Threads werden als \textit{Threadteam} oder \textit{team of threads} bezeichnet\footnote{Die Implementierung von OpenMP entscheidet "uber die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein.}. F"ur OpenMP, bzw. der Entwicklung mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar.
 
-Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, andem das team of threads auf alle Teammitglieder wartet. Die Abbildung \ref{join_fork_model} stellt einen möglichen Ablauf mit OpenMP dar.
+Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, an dem das \emph{team of threads} auf alle Teammitglieder wartet. Die Abbildung \ref{join_fork_model} stellt einen möglichen Ablauf mit OpenMP dar.
 
-Sofern nicht anders angegeben verwenden alle Threads eines Thread-Teams einen gemeinsam genutzten Adressraum und können somit auf alle Variablen eines parallen Codeabschnitts zugreifen, über die auch die Kommunikation zwischen den Threads ermöglicht wird. Folgende Klauseln für Variablen können eingesetzt werden:
+Sofern nicht anders angegeben, verwenden alle Threads eines Thread-Teams einen gemeinsam genutzten Adressraum und können somit auf alle Variablen eines parallen Codeabschnitts zugreifen, über die auch die Kommunikation zwischen den Threads ermöglicht wird. Folgende Klauseln für Variablen können eingesetzt werden:
 
 \begin{itemize}
 \item \textit{shared}/\textit{private}: Threads können explizit als gemeinsame Variable oder für jeden Thread private Variable deklariert werden.
@@ -150,14 +149,14 @@ Sofern nicht anders angegeben verwenden alle Threads eines Thread-Teams einen ge
 \subsection{Umgebungsvariablen und Bibliotheksfunktionen}
 
 Um mittels OpenMP Programme zu parallelisieren und die Parallelisierung zu kontrollieren, können Umgebungsvariablen verwendet werden. Beispielsweise kann die maximale Anzahl der zu verwendenen Threads durch \texttt{OMP\_NUM\_THREADS} verändert werden.\\ 
-Zum Holen und Setzen von Umgebungsvariablen bietet OpenMP entsprechende Bibliotheksfunktionen. Diese haben auch Vorrang vor den Umgebungsvariablen.\\
+Zum Auslesen und Setzen von Umgebungsvariablen bietet OpenMP entsprechende Bibliotheksfunktionen. Diese haben auch Vorrang vor den Umgebungsvariablen.\\
 Für das Beispiel der Anzahl der Threads kann \texttt{void omp\_set\_num\_threads(int)} zum Setzen der Variablen und \texttt{int omp\_get\_num\_threads()} zum Holen der Variablen verwendet werden.
 
 Zu beachten ist hier, dass die Portabilität leidet, wenn die Umgebungsvariablen verwendet werden. Compilerdirektiven (siehe nächster Abschnitt) können vom Compiler ignoriert werden, wenn das Programm ohne OpenMP-Unterstützung kompiliert wird. Allerdings können Bibliotheksfunktionen vom Compiler nicht ignoriert werden. \\
 Abhilfe schafft \textit{Bedingte Kompilierung}\footnote{Bedingte Kompilierung: bietet die Möglichkeit, je nach Gegebenheiten bestimmte Quelltextblöcke von der Kompilierung auszuschließen oder einzubinden. } (\texttt{\#ifdef \_OPENMP}), sodass Aufrufe von Bibliotheksfunktionen nur geschehen wenn mit OpenMP-Unterstützung kompiliert wurde. 
 
 \subsection{Parallelisierung von Schleifen} 
-Nach der Klassifikation von Flynn kann OpenMP als Single Programm Multiple Data (SPMD) beschrieben werden. Demnach führt jeder Thread der gestartet wurde den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\footnote{Vgl. \cite{openmp08}, Kapitel 3.1: Parallelität auf Schleifenebene}
+Nach der Klassifikation von Flynn kann OpenMP als \emph{Single Instruction Multiple Data} (SIMD) beschrieben werden. Demnach führt jeder Thread, der gestartet wurde, den Schleifenblock aus. Dabei hat jeder Thread seine eigene Iteration und Teilmenge von Daten.\footnote{Vgl. \cite{openmp08}, Kapitel 3.1: Parallelität auf Schleifenebene}
 
 Ein team of threads wird mittels \textit{\#pragma omp parallel} gestartet. Zur Veranschaulichung sei das Listing \ref{parallelExample} gegeben. 
 
@@ -173,12 +172,13 @@ Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleif
 \item \texttt{break}-Anweisungen dürfen nicht im Schleifenrumpf verwendet werden. Allerdings kann eine Iteration durch eine \textbf{continue}-Anweisung übergangen werden oder das gesamte Programm mittel \textbf{exit} verlassen werden.
 \end{itemize}
 
+%TODO Satzbau
 Ein team of threads durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist die Reihenfolge der Bearbeitung der Arbeit nicht "vorhersehbar". Um einen kritischen Adressraum innerhalb eines parallelen Abschnitts zu kennzeichnen, bietet OpenMP ein weitere Direktive an: \textit{\#pragma omp critical \{ ... \}}. Der von der Klammer umschlossene Code wird demnach von nur einem Thread ausgeführt. 
 
 \subsection{Sections und Tasks}
 
-Neben der Parallelisierung von Schleifen stellt sich auch die Frage wie nicht-iterative Programmteile parallelisiert werden können und  wie Arbeitsverteilung mittels OpenMP geschieht. OpenMP stellt dafür zweierlei Möglichkeiten zur Verfügung, die sog. \textit{Sections} und \textit{Tasks} (seit OpenMP 3.0). \\
-\\
+Neben der Parallelisierung von Schleifen stellt sich auch die Frage, wie nicht-iterative Programmteile parallelisiert werden können und  wie Arbeitsverteilung mittels OpenMP geschieht. OpenMP stellt dafür zweierlei Möglichkeiten zur Verfügung, die sog. \textit{Sections} und \textit{Tasks} (seit OpenMP 3.0).
+
 Bei den \textbf{Sections} können nicht-iterative und unabhängige Codeteile durch die Direktive \texttt{\#pragma omp sections \{ ... \}} umschlossen werden und jeder zu parallelisierende Abschnitt kann mit \texttt{\#pragma omp section \{ ... \}} markiert werden. Jeder Abschnitt innerhalb des \textit{Sections}-Bereichs wird einmal innerhalb des Thread-Teams ausgeführt. Die Reihenfolge der Abarbeitung kann allerdings nicht beeinflußt werden. OpenMP garantiert das jede \textit{Section} genau einmal von einem Thread ausgeführt wird und das weiterhin Threads am Ende der Direktive synchronisiert werden. Wenn mehr Threads zur Verfügung stehen als Sections zum Abarbeiten definiert wurden, verbleiben unnötige Threads an den Synchronisationspunkten.
 
 SIEHE Sections-Beispiel
@@ -191,10 +191,6 @@ SIEHE Task-Beispiel
 % TODO: Code Examples 
 
 \pagebreak % first part ends
-
-%\section{Vergleich mit TBB und anderen?!}
-
-%\pagebreak % second part ends
 
 \section{Untersuchung des Laufzeitverhaltens von OpenMP im Vergleich zur Intel TBB}
 % renew to mark part of other team member
