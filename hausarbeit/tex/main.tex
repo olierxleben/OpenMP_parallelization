@@ -150,8 +150,9 @@ Sofern nicht anders angegeben verwenden alle Threads eines Thread-Teams einen ge
 \subsection{Umgebungsvariablen und Bibliotheksfunktionen}
 
 Um mittels OpenMP Programme zu parallelisieren und die Parallelisierung zu kontrollieren, können Umgebungsvariablen verwendet werden. Beispielsweise kann die maximale Anzahl der zu verwendenen Threads durch \texttt{OMP\_NUM\_THREADS} verändert werden.\\ 
-Zum Holen und Setzen von Umgebungsvariablen bietet OpenMP entsprechende Bibliotheksfunktionen. Diese haben auch Vorrang vor den Umgebungsvariablen.\\ Für das Beispiel der Anzahl der Threads kann \texttt{void omp\_set\_num\_threads(int)} zum Setzen der Variablen und \texttt{int omp\_get\_num\_threads()} zum Holen der Variablen verwendet werden.\\
-\\
+Zum Holen und Setzen von Umgebungsvariablen bietet OpenMP entsprechende Bibliotheksfunktionen. Diese haben auch Vorrang vor den Umgebungsvariablen.\\
+Für das Beispiel der Anzahl der Threads kann \texttt{void omp\_set\_num\_threads(int)} zum Setzen der Variablen und \texttt{int omp\_get\_num\_threads()} zum Holen der Variablen verwendet werden.
+
 Zu beachten ist hier, dass die Portabilität leidet, wenn die Umgebungsvariablen verwendet werden. Compilerdirektiven (siehe nächster Abschnitt) können vom Compiler ignoriert werden, wenn das Programm ohne OpenMP-Unterstützung kompiliert wird. Allerdings können Bibliotheksfunktionen vom Compiler nicht ignoriert werden. \\
 Abhilfe schafft \textit{Bedingte Kompilierung}\footnote{Bedingte Kompilierung: bietet die Möglichkeit, je nach Gegebenheiten bestimmte Quelltextblöcke von der Kompilierung auszuschließen oder einzubinden. } (\texttt{\#ifdef \_OPENMP}), sodass Aufrufe von Bibliotheksfunktionen nur geschehen wenn mit OpenMP-Unterstützung kompiliert wurde. 
 
