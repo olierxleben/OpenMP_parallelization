@@ -173,15 +173,16 @@ Ein team of threads wird durch ihren gemeinsamen Adressraum synchronisiert. Dabe
 Neben der Parallelisierung von Schleifen stellt sich auch die Frage, wie nicht-iterative Programmteile parallelisiert werden können und  wie Arbeitsverteilung mittels OpenMP geschieht. OpenMP stellt dafür zweierlei Möglichkeiten zur Verfügung, die sog. \textit{Sections} und \textit{Tasks} (seit OpenMP 3.0).
 
 Bei den \textbf{Sections} können nicht-iterative und unabhängige Codeteile durch die Direktive \texttt{\#pragma omp sections \{ ... \}} umschlossen werden und jeder zu parallelisierende Abschnitt kann mit \texttt{\#pragma omp section \{ ... \}} markiert werden. Jeder Abschnitt innerhalb des \textit{Sections}-Bereichs wird einmal innerhalb des Thread-Teams ausgeführt. Die Reihenfolge der Abarbeitung kann allerdings nicht beeinflußt werden. OpenMP garantiert das jede \textit{Section} genau einmal von einem Thread ausgeführt wird und das weiterhin Threads am Ende der Direktive synchronisiert werden. Wenn mehr Threads zur Verfügung stehen als Sections zum Abarbeiten definiert wurden, verbleiben unnötige Threads an den Synchronisationspunkten.
-
+% TODO: Code Examples 
 SIEHE Sections-Beispiel
 
 % TODO: Überarbeiten
 Das \textbf{Tasks}-Konzept ist die größte Erneuerung für OpenMP mit dem Release der Version 3.0. Ein Thread kann einen Task ausführen, sobald dieser auf die Task-Direktive trifft, oder aber er kann den Task für später bereithalten oder an einen anderen Thread abgeben. Im Unterschied zu Sections kann ein Task von jedem Thread im Team definiert werden. Die Definition eines Tasks kann an beliebiger Stelle passieren. Ein beliebiger Thread kann einen Task ausführen. \\
 Mittels der Compilerdirektive \texttt{\#pragma omp task} kann ein Task gestartet werden. 
 
+% TODO: Code Examples
 SIEHE Task-Beispiel 
-% TODO: Code Examples 
+ 
 
 \pagebreak % first part ends
 
@@ -266,6 +267,8 @@ In der Auswertung fällt auf, dass die Laufzeit (und der davon abhängige Speed-
 
 Der geringere Speed-Up ist vermutlich auf sequentielle Anteile des Programms sowie erhöhten Synchronisationsbedarf durch Zugriff auf gemeinsame Datenstrukturen zurück zu führen. Diese Einflussfaktoren begrenzen nach dem \emph{Amdahlschen Gesetz} den maximal erreichbaren Speed-Up.\footnote{Vgl. \cite[S.~318]{bengel_masterkurs_2008}}
 
+% TODO: Unnötige Texte für die final rausnehmen
+
 %Der geringere Speed-Up kann mit dem \emph{Amdahlschen Gesetz} erklärt werden. Dieses definiert den maximalen Speed-Up
 %eines Programms wie folgt:\footnote{Vgl. \cite[S.~318]{bengel_masterkurs_2008}}
 
@@ -291,7 +294,7 @@ Zusammenfassend eignet sich OpenMP ausgezeichnet zur Parallelisierung bereits be
 
 Da OpenMP jedoch keine geeigneten threadsicheren Datenstrukturen mit sich bringt, empfiehlt sich die Verwendung von OpenMP zusammen mit einer entsprechenden Bibliothek (in C++ beispielsweise die TBB- oder die Boost-Bibliothek).
 
-Kombi mit OpenMPI?
+% TODO/Vorschlag: Einsatz von MPI in verteilten Anwendungen mit aufnehmen? 
 
 \pagebreak % third part ends
 
