@@ -167,8 +167,7 @@ Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleif
 \item \texttt{break}-Anweisungen dürfen nicht im Schleifenrumpf verwendet werden. Allerdings kann eine Iteration durch eine \textbf{continue}-Anweisung übergangen werden oder das gesamte Programm mittel \textbf{exit} verlassen werden.
 \end{itemize}
 
-%TODO Satzbau
-Ein team of threads durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist die Reihenfolge der Bearbeitung der Arbeit nicht "vorhersehbar". Um einen kritischen Adressraum innerhalb eines parallelen Abschnitts zu kennzeichnen, bietet OpenMP ein weitere Direktive an: \textit{\#pragma omp critical \{ ... \}}. Der von der Klammer umschlossene Code wird demnach von nur einem Thread ausgeführt. 
+Ein team of threads wird durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist die Reihenfolge der Bearbeitung der Arbeit nicht "vorhersehbar". Um einen kritischen Adressraum innerhalb eines parallelen Abschnitts zu kennzeichnen, bietet OpenMP ein weitere Direktive an: \textit{\#pragma omp critical \{ ... \}}. Der von der Klammer umschlossene Code wird demnach von nur einem Thread ausgeführt. 
 
 \subsection{Sections und Tasks}
 
