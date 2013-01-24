@@ -172,8 +172,13 @@ Bei den \textbf{Sections} können nicht-iterative und unabhängige Codeteile dur
 % TODO: Code Examples 
 SIEHE Sections-Beispiel
 
-% TODO: Überarbeiten
-Das \textbf{Tasks}-Konzept ist die größte Erneuerung für OpenMP mit dem Release der Version 3.0. Ein Thread kann einen Task ausführen, sobald dieser auf die Task-Direktive trifft, oder aber er kann den Task für später bereithalten oder an einen anderen Thread abgeben. Im Unterschied zu Sections kann ein Task von jedem Thread im Team definiert werden. Die Definition eines Tasks kann an beliebiger Stelle passieren. Ein beliebiger Thread kann einen Task ausführen. \\
+Das \textbf{Tasks}-Konzept ist die größte Erneuerung für OpenMP mit dem Release der Version 3.0. Die Definition eines Tasks akann an beliebiger Stelle passieren. Im Unterschied zu Sections kann ein Task auch durch einen beliebigen Thread definiert werden. Es gibt drei Möglichkeiten wie ein Thread einen Task behandeln kann, sobald dieser auf eine Task-Direktive trifft:
+\begin{itemize}
+\item{Ein Thread kann einen Task sofort ausführen}
+\item{Ein Task wird von einem Thread zur späteren Ausführung bereitgehalten}
+\item{Der Thread kann den Task an einen anderen Thread abgeben}
+\end{itemize}
+
 Mittels der Compilerdirektive \texttt{\#pragma omp task} kann ein Task gestartet werden. 
 
 % TODO: Code Examples
