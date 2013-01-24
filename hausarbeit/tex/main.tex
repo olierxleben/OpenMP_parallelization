@@ -154,10 +154,6 @@ Nach der Klassifikation von Flynn kann OpenMP als \emph{Single Instruction Multi
 
 Ein team of threads wird mittels \textit{\#pragma omp parallel} gestartet. Zur Veranschaulichung sei das Listing \ref{parallelExample} gegeben. 
 
-Die For-Schleife in Zeile 8 wird von allen vom System zur Verfügung stehenden Threads ausgeführt. Allerdings teilen sich die Threads nicht die Arbeit, sondern jeder Thread führt die Schleife komplett für sich aus. Um eine Schleife parallel auszuführen, muss über eine weitere Direktive, wie in Listing \ref{parallelForExample} zu sehen, eingefügt werden. 
-
-In diesem Beispiel wird der zu parallelisierende Bereich eine Variable \textit{tid}, die threadId, übergeben. Jeder Thread erhält diese Variable, die nicht gemeinsam genutzt werden kann (private). Mittels \textit{\#pragma omp for} wird dem Compiler mitgeteilt das die darauffolgende Schleife parallel durch das team of threads  im parallelen Bereich ausgeführt werden soll.
-
 Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleifen in kanonischer Form geschrieben sein müssen. Die kanonische Form liegt wenn folgende Bedingungen erfüllt sind: 
 \begin{itemize}
 \item Anzahl der Schleifendurchläufe muss berechnbar sein und darf sich innerhalb des Schleifenblocks nicht ändern. Ebenso dürfen sich Start und Endwert während des Schleifendurchlaufs nicht ändern.
@@ -424,8 +420,9 @@ done
 \subsection{}
 
 \lstinputlisting[caption= pragma omp parallel - Beispiel, label=parallelExample]{../src/1_3_example/parallel.c}
+Die For-Schleife in Zeile 8 wird von allen vom System zur Verfügung stehenden Threads ausgeführt. Allerdings teilen sich die Threads nicht die Arbeit, sondern jeder Thread führt die Schleife komplett für sich aus. Um eine Schleife parallel auszuführen, muss über eine weitere Direktive, wie in Listing \ref{parallelForExample} zu sehen, eingefügt werden. 
 
 \lstinputlisting[caption= pragma omp parallel for - Beispiel, label=parallelForExample]{../src/1_3_example/parallelfor.c}
-
+In diesem Beispiel wird der zu parallelisierende Bereich eine Variable \textit{tid}, die threadId, übergeben. Jeder Thread erhält diese Variable, die nicht gemeinsam genutzt werden kann (private). Mittels \textit{\#pragma omp for} wird dem Compiler mitgeteilt das die darauffolgende Schleife parallel durch das team of threads  im parallelen Bereich ausgeführt werden soll.
 
 \end{document}
