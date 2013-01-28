@@ -1,20 +1,8 @@
-	/* 
-* 
-* Hello World programm prints 'Hello World' message x-times, where x is number of threads in CPU
-* @version 1.0
-*
-* compiled with: 	g++ -fopenmp helloOpenMP.cpp -o test
-* running with:		./test
-*
-* Tested on Mac OS 10.8.2 
-*/
 #include <stdio.h>
-#include <omp.h>
+# include <omp.h>
 
-#define NUM_PROCESSORS 2
-
-int main(int argc, char *argv[])
-{	
+int main (void) {
+	
 	int tid; // thread id
 	
 	printf( "Number of Processors/threads in this System: %i\nNumber of Threads use in this Program: %i\n\n", 
