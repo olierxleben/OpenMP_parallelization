@@ -95,7 +95,7 @@ Die vorliegende Arbeit wurde mit LaTeX verfasst und ist eine gemeinsame Arbeit v
 Die Arbeit gliedert sich in zwei Teile. Im ersten Teil wird eine Einführung in OpenMP gegeben. Es werden hier Kernfunktionen der Programmierschnittstelle gezeigt, die Parallelisierung von Schleifen verdeutlicht und auf Verteilung von Aufgaben eingegegangen.\\
 Der zweite Teil zeigt die Optimierung der Parallelisierungsaufgabe aus Intel`s \textit{Accelerate Your Code} von September 2012 mittels OpenMP auf und vergleicht die Ergebnisse mit der Programmierbibliothek \textit{Threading Building Blocks} von Intel.\\
 \\
-Code-Beispiele werden aus Gründen der Lesbarkeit und des Platzverbrauchs in die Anhänge verschoben. An den Stellen wird auf die Source Codes verwiesen. Die Arbeit betrachtet weiterhin nur OpenMP in Verwendung mit C und C++. Fortran wird nicht behandelt.
+Code-Beispiele werden aus Gründen der Lesbarkeit und des Umfangs in die Anhänge verschoben. An den Stellen wird auf die Source Codes verwiesen. Die Arbeit betrachtet weiterhin nur OpenMP in Verwendung mit C und C++. Fortran wird nicht behandelt.
 \end{abstract}
 
 \pagebreak
@@ -111,26 +111,26 @@ Ein weiteres Plus f"ur den Einsatz von OpenMP ist die weite Verbreitung von Mult
 
 Ursprünglich wurde OpenMP für den Bereich High Performance Computing entwickelt, wo Programmcode meist viele Schleifen enthält. Demnach ist die Parallelisierung von Schleifen die Hauptaufgabe von OpenMP und die meisten Vorteile können an dieser Stelle von OpenMP aufgezeigt werden. 
 
-In der aktuellen Version von OpenMP werden allerdings auch noch weitere Sprachkonstrukte angeboten. Zum Beispiel Sections oder Tasks, mit der Arbeit auf mehrere Threads verteilt werden kann.
+In der aktuellen Version von OpenMP werden noch weitere Sprachkonstrukte angeboten, wie zum Beispiel Sections oder Tasks, mit denen die Arbeit auf mehrere Threads verteilt werden kann.
 
-Beispiele finden für Sections finden sich im Anhang, Listing \ref{sectionsExample}, bzw. Listing \ref{taskExample} für Tasks. 
+Beispiele für Sections finden sich im Anhang, Listing \ref{sectionsExample}, bzw. in Listing \ref{taskExample} für Tasks. 
 
 \subsection{Merkmale von OpenMP}
 
-Mit OpenMP wird ein hoher \textbf{Abstraktionsgrad} erreicht, da Threads nicht durch einen Programmierer initialisiert, gestartet oder beenden werden m"ussen. Wie bereits in der Einf"uhrung erwähnt, beitet OpenMP eine gute \textbf{Portabilität} des Programms an, zum einen ist OpenMP in vielen Mainstream-Compilern implementiert, zum anderen können Compiler ohne OpenMP-Unterst"utzung das Programm ohne Veränderung kompilieren, da die Compilerdirektiven durch Pragmas eingesetzt und ignoriert werden können. Auch bleibt der sequenzielle Programmcode vollständig erhalten, wenn nicht mittels OpenMP kompiliert wird. Der Quelltext kann somit \textbf{Schrittweise parallelisiert} werden. 
+Mit OpenMP wird ein hoher \textbf{Abstraktionsgrad} erreicht, da Threads nicht durch einen Programmierer initialisiert, gestartet oder beenden werden m"ussen. Wie bereits in der Einführung erwähnt, bietet OpenMP eine gute \textbf{Portabilität} des Programms an. Zum einen ist OpenMP in vielen Mainstream-Compilern implementiert, zum anderen können Compiler ohne OpenMP-Unterstützung das Programm ohne Veränderung kompilieren, da die Compilerdirektiven durch Pragmas eingesetzt und ignoriert werden können. Auch bleibt der sequenzielle Programmcode vollständig erhalten, wenn nicht mittels OpenMP kompiliert wird. Der Quelltext kann somit \textbf{Schrittweise parallelisiert} werden. 
 
 \subsection{Ausführungsmodell}
 
-Die parallele Ausführung erfolgt durch Threads auf dem Fork-/Join\footnote{Fork/Join: Vgl. \cite{openmp08}, Seite 22 ff.}-Ausführungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausf"uhrung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die Ausf"uhrung in Threads auf. Die erstellten Threads werden als \textit{Threadteam} oder \textit{team of threads} bezeichnet\footnote{Die Implementierung von OpenMP entscheidet "uber die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein. Vgl. \cite{openmp08}, Seite 24}. Für OpenMP, bzw. der Entwicklung mit OpenMP stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar. 
+Die parallele Ausführung erfolgt durch Threads auf dem Fork-/Join\footnote{Fork/Join: Vgl. \cite{openmp08}, Seite 22 ff.}-Ausführungsmodell. Zu Beginn eines Programms ist nur ein Thread aktiv, der sog. \textit{Master Thread}. Sobald bei der Programmausf"uhrung die Direktive \textit{\#pragma omp parallel \{ ... \} } erreicht wird, gabelt sich die Ausf"uhrung in Threads auf. Die erstellten Threads werden als \textit{Threadteam} oder \textit{team of threads} bezeichnet\footnote{Die Implementierung von OpenMP entscheidet "uber die Art der Threads die erstellt werden. Es könnten Threds auf Basis der PThreads-Bibliothek oder aber auch als vollwertige Shared-Memory-Prozesse umgesetzt sein. Vgl. \cite{openmp08}, Seite 24}. Für OpenMP, bzw. der Entwicklung mit OpenMP, stellen Threads einen Kontrollfluss mit gemeinsamen Adressraum dar. 
 
 Die schließende geschweifte Klammer ist zudem ein Synchronisationspunkt, an dem das \emph{team of threads} auf alle Teammitglieder wartet. Die Abbildung \ref{join_fork_model} stellt einen möglichen Ablauf mit OpenMP dar.
 
 Sofern nicht anders angegeben, verwenden alle Threads eines Thread-Teams einen gemeinsam genutzten Adressraum und können somit auf alle Variablen eines parallen Codeabschnitts zugreifen, über die auch die Kommunikation zwischen den Threads ermöglicht wird. Folgende Klauseln für Variablen können eingesetzt werden:
 
 \begin{itemize}
-\item \textit{shared}/\textit{private}: Threads können explizit als gemeinsame Variable oder für jeden Thread private Variable deklariert werden.
-\item \textit{firstprivate}/\textit{lastprivate}: Diese Klauseln erlauben die Initialisierung, bzw. Finalisierung der Variable beim Ein- und Austritt in oder aus einem parallen Bereich.
-\item \textit{default}: Wenn Variablen nicht explizit als \textit{shared} oder \textit{private} ausgewiesen werden, werden Variablen immer als \textit{shared} behandelt. Dieses Standardverhalten kann mittels \textit{defualt} verändert werden. \item \textit{reduction}: Eine spezielle gemeinsam genutzte Variable über die mehrere Threads Werte zusammentragen können.
+\item \textit{shared}/\textit{private}: Threads können explizit als gemeinsame Variable oder für jeden Thread private Variable deklariert werden
+\item \textit{firstprivate}/\textit{lastprivate}: Diese Klauseln erlauben die Initialisierung, bzw. Finalisierung der Variable beim Ein- und Austritt in oder aus einem parallen Bereich
+\item \textit{default}: Wenn Variablen nicht explizit als \textit{shared} oder \textit{private} ausgewiesen werden, werden Variablen immer als \textit{shared} behandelt. Dieses Standardverhalten kann mittels \textit{defualt} verändert werden \item \textit{reduction}: Eine spezielle gemeinsam genutzte Variable über die mehrere Threads Werte zusammentragen können
 \end{itemize}
 
 
@@ -145,7 +145,7 @@ Sofern nicht anders angegeben, verwenden alle Threads eines Thread-Teams einen g
 \subsection{Umgebungsvariablen und Bibliotheksfunktionen}
 
 Um mittels OpenMP Programme zu parallelisieren und die Parallelisierung zu kontrollieren, können Umgebungsvariablen verwendet werden. Beispielsweise kann die maximale Anzahl der zu verwendenen Threads durch \texttt{OMP\_NUM\_THREADS} verändert werden.\\ 
-Zum Auslesen und Setzen von Umgebungsvariablen bietet OpenMP entsprechende Bibliotheksfunktionen. Diese haben auch Vorrang vor den Umgebungsvariablen.\\
+Zum Auslesen und Setzen von Umgebungsvariablen bietet OpenMP entsprechende Bibliotheksfunktionen, welche auch vorrangig vor den Umgebungsvariablen sind.\\
 Für das Beispiel der Anzahl der Threads kann \texttt{void omp\_set\_num\_threads(int)} zum Setzen der Variablen und \texttt{int omp\_get\_num\_threads()} zum Holen der Variablen verwendet werden. \\
 
 Das Listing \ref{envvarsLibfuncs} aus dem Anhang zeigt beispielhaft den Umgang mit Umgebungsvariablen und den von OpenMP zur Verfügung gestellten Bibliotheksfunktionen.
@@ -162,10 +162,10 @@ Das Listing \ref{parallelForExample} im Anhang zeigt beispielhaft einen Ablauf z
 
 Als Vorraussetzung für parallelisierbare Schleifen fordert OpenMP, dass Schleifen in kanonischer Form geschrieben sein müssen. Die kanonische Form liegt wenn folgende Bedingungen erfüllt sind: 
 \begin{itemize}
-\item Anzahl der Schleifendurchläufe muss berechnbar sein und darf sich innerhalb des Schleifenblocks nicht ändern. Ebenso dürfen sich Start und Endwert während des Schleifendurchlaufs nicht ändern.
-\item Es sind nur boolsche Vergleichoperator im Schleifenkopf erlaubt.
+\item Anzahl der Schleifendurchläufe muss berechenbar sein und darf sich innerhalb des Schleifenblocks nicht ändern. Ebenso dürfen sich Start und Endwert während des Schleifendurchlaufs nicht ändern.
+\item Es sind nur boolsche Vergleichsoperatoren im Schleifenkopf erlaubt.
 \item Das Inkrement im Schleifenkopf darf nur aus Addition oder Subtraktion inkrementiert oder dekrementiert werden. 
-\item \texttt{break}-Anweisungen dürfen nicht im Schleifenrumpf verwendet werden. Allerdings kann eine Iteration durch eine \textbf{continue}-Anweisung übergangen werden oder das gesamte Programm mittel \textbf{exit} verlassen werden.
+\item \texttt{break}-Anweisungen dürfen nicht im Schleifenrumpf verwendet werden. Allerdings kann eine Iteration durch eine \textbf{continue}-Anweisung übergangen oder das gesamte Programm mittel \textbf{exit} verlassen werden.
 \end{itemize}
 
 Ein team of threads wird durch ihren gemeinsamen Adressraum synchronisiert. Dabei ist die Reihenfolge der Bearbeitung der Arbeit nicht "vorhersehbar". Um einen kritischen Adressraum innerhalb eines parallelen Abschnitts zu kennzeichnen, bietet OpenMP ein weitere Direktive an: \textit{\#pragma omp critical \{ ... \}}. Der von der Klammer umschlossene Code wird demnach von nur einem Thread ausgeführt. 
@@ -177,7 +177,7 @@ Neben der Parallelisierung von Schleifen stellt sich auch die Frage, wie nicht-i
 Bei den \textbf{Sections} können nicht-iterative und unabhängige Codeteile durch die Direktive \texttt{\#pragma omp sections \{ ... \}} umschlossen werden und jeder zu parallelisierende Abschnitt kann mit \texttt{\#pragma omp section \{ ... \}} markiert werden. Jeder Abschnitt innerhalb des \textit{Sections}-Bereichs wird einmal innerhalb des Thread-Teams ausgeführt. Die Reihenfolge der Abarbeitung kann allerdings nicht beeinflußt werden. OpenMP garantiert das jede \textit{Section} genau einmal von einem Thread ausgeführt wird und das weiterhin Threads am Ende der Direktive synchronisiert werden. Wenn mehr Threads zur Verfügung stehen als Sections zum Abarbeiten definiert wurden, verbleiben unnötige Threads an den Synchronisationspunkten. \\
 Eine Anwendung von Sections findet sich im Anhang, Listing \ref{sectionsExample}.
 
-Das \textbf{Tasks}-Konzept ist die größte Erneuerung für OpenMP mit dem Release der Version 3.0. Die Definition eines Tasks akann an beliebiger Stelle passieren. Im Unterschied zu Sections kann ein Task auch durch einen beliebigen Thread definiert werden. Es gibt drei Möglichkeiten wie ein Thread einen Task behandeln kann, sobald dieser auf eine Task-Direktive trifft:
+Das \textbf{Tasks}-Konzept ist die größte Erneuerung für OpenMP mit dem Release der Version 3.0. Die Definition eines Tasks kann an beliebiger Stelle passieren. Im Unterschied zu Sections kann ein Task auch durch einen beliebigen Thread definiert werden. Es gibt drei Möglichkeiten wie ein Thread einen Task behandeln kann, sobald dieser auf eine Task-Direktive trifft:
 \begin{itemize}
 \item{Ein Thread kann einen Task sofort ausführen}
 \item{Ein Task wird von einem Thread zur späteren Ausführung bereitgehalten}
@@ -186,7 +186,7 @@ Das \textbf{Tasks}-Konzept ist die größte Erneuerung für OpenMP mit dem Relea
 
 Mittels der Compilerdirektive \texttt{\#pragma omp task} kann ein Task gestartet werden. \\
 
-Ein Veranschaulichendes Beispiel findet sich im Anhang, Listing \ref{taskExample}. 
+Ein veranschaulichendes Beispiel findet sich im Anhang, Listing \ref{taskExample}. 
 
 \pagebreak % first part ends
 
@@ -386,7 +386,7 @@ Die For-Schleife in Zeile 8 wird von allen vom System zur Verfügung stehenden T
 
 \subsection{Parallele Schleifen - Hello OMP For}
 \lstinputlisting[caption= pragma omp parallel for - Beispiel, label=parallelForExample]{../src/loops/parallelfor.c}
-In diesem Beispiel wird der zu parallelisierende Bereich eine Variable \textit{tid}, die threadId, übergeben. Jeder Thread erhält diese Variable, die nicht gemeinsam genutzt werden kann (private). Mittels \texttt{\#pragma omp for} wird dem Compiler mitgeteilt das die darauffolgende Schleife parallel durch das team of threads  im parallelen Bereich ausgeführt werden soll.
+In diesem Beispiel wird der zu parallelisierende Bereich eine Variable \textit{tid}, die threadId, übergeben. Jeder Thread erhält diese Variable, die nicht gemeinsam genutzt werden kann (private). Mittels \texttt{\#pragma omp for} wird dem Compiler mitgeteilt, dass die darauffolgende Schleife parallel durch das team of threads  im parallelen Bereich ausgeführt werden soll.
 
 \subsection{Section-Beispiel }
 \lstinputlisting[caption= Section-Beispiel, label=sectionsExample]{../src/sections/sections.c}
@@ -395,6 +395,6 @@ Dieses Beispiel berechnet über 2 Threads die Summe, bzw. die Multiplikation von
 \subsection{Task-Beispiel: Fibonacci}
 \lstinputlisting[caption= Task-Beispiel: Fibonacci, label=taskExample]{../src/tasks/fib.c}
 Das gegebene Beispiel berechnet mit Hilfe von OpenMP-Tasks rekursiv die Fibunacci-Zahlenfolge für n-Zahlen mit einer gegebenen Anzahl Threads. Die Funktion \texttt{fib(int)} ist für die Berechnung verantwortlich. \\
-Im Quelltext des Beispiels soll die Fibunacci-Zahlenfolge für n = 7 berechnet werden. Für n > 2 kann nun die vorherige Zahl (n -1) und die vorvorherige Zahl (n - 2) berechnet werden. Das Ergbnis ist die Summe aus den beiden Teilergebnissen i und j, welches zurückgegeben wird. Zu beachten ist, das \textit{i} und \textit{j} im gesamten Adressraum zu Verfügung stehen und jeder Task sein eigenes \textit{n} verwendet. Jede für n = 7 erzeugt der Algorithmus nun jeweils zwei weitere Berechnungen bis n <= 2 ist, da für 1 und 2 keine Berechnungen erforderlich sind und damit auch das Abbruckriterium der Rekursion darstellen.  
+Im Quelltext des Beispiels soll die Fibunacci-Zahlenfolge für n = 7 berechnet werden. Für n > 2 kann nun die vorherige Zahl (n -1) und die vorvorherige Zahl (n - 2) berechnet werden. Das Ergebnis ist die Summe aus den beiden Teilergebnissen i und j, welches zurückgegeben wird. Zu beachten ist, dass \textit{i} und \textit{j} im gesamten Adressraum zu Verfügung stehen und jeder Task sein eigenes \textit{n} verwendet. Für jedes n > 2 erzeugt der Algorithmus nun zwei weitere Berechnungen bis n = 2 erreicht wird, da für 1 und 2 keine Berechnungen erforderlich sind und damit auch das Abbruchkriterium der Rekursion darstellt.  
 
 \end{document}
