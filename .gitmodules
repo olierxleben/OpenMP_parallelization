@@ -1,0 +1,6 @@
+[submodule "hausarbeit/intel-ayc-tbb"]
+	path = hausarbeit/intel-ayc-tbb
+	url = git@github.com:martin-helmich/intel-ayc-2012.git
+[submodule "hausarbeit/intel-ayc-openmp"]
+	path = hausarbeit/intel-ayc-openmp
+	url = git@github.com:martin-helmich/intel-ayc-2012.git
