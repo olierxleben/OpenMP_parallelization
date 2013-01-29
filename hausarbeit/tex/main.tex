@@ -32,7 +32,7 @@
 	breaklines=true,						% line breaks 
 	keywordstyle=\color{red},
 	frame=b,
-	stringstyle=\color{white}\ttfamily,	% color of strings in code
+	stringstyle=\color{gray}\ttfamily,	% color of strings in code
 	showspaces=false,					% visualize spaces
     showtabs=false,						% visualize tabs
     xleftmargin=17pt,
@@ -378,25 +378,26 @@ Die gemessenen Daten wurden mit folgenden Bash-Skripten erhoben:
 
 \subsection{Umgebungsvariablen und Bibliotheksfunktionen}
 
-\lstinputlisting[caption= Umgebungsvariablen und Bibliotheksfunktionen, label=envvarsLibfuncs]{../src/envvars_libfuncs/envvars_libfuncs.c}
+\lstinputlisting[caption= Umgebungsvariablen und Bibliotheksfunktionen, label=envvarsLibfuncs,language=C]{../src/envvars_libfuncs/envvars_libfuncs.c}
 
 \subsection{Parallele Schleifen - Hello OMP Parallel}
 
-\lstinputlisting[caption= pragma omp parallel - Beispiel, label=parallelExample, language=Bash]{../src/loops/parallel.c}
+\lstinputlisting[caption= pragma omp parallel - Beispiel, label=parallelExample, language=C]{../src/loops/parallel.c}
 
 Die For-Schleife in Zeile 8 wird von allen vom System zur Verfügung stehenden Threads ausgeführt. Allerdings teilen sich die Threads nicht die Arbeit, sondern jeder Thread führt die Schleife komplett für sich aus. Um eine Schleife parallel auszuführen, muss über eine weitere Direktive, wie in Listing \ref{parallelForExample} zu sehen, eingefügt werden. 
 
 \subsection{Parallele Schleifen - Hello OMP For}
-\lstinputlisting[caption= pragma omp parallel for - Beispiel, label=parallelForExample]{../src/loops/parallelfor.c}
+\lstinputlisting[caption= pragma omp parallel for - Beispiel, label=parallelForExample,language=C]{../src/loops/parallelfor.c}
 In diesem Beispiel wird der zu parallelisierende Bereich eine Variable \textit{tid}, die threadId, übergeben. Jeder Thread erhält diese Variable, die nicht gemeinsam genutzt werden kann (private). Mittels \texttt{\#pragma omp for} wird dem Compiler mitgeteilt, dass die darauffolgende Schleife parallel durch das team of threads  im parallelen Bereich ausgeführt werden soll.
 
 \subsection{Section-Beispiel }
-\lstinputlisting[caption= Section-Beispiel, label=sectionsExample]{../src/sections/sections.c}
+\lstinputlisting[caption= Section-Beispiel, label=sectionsExample,language=C]{../src/sections/sections.c}
 Dieses Beispiel berechnet über 2 Threads die Summe, bzw. die Multiplikation von Elementen aus zwei Arrays, wobei ein Thread für die Addition und der zweite Thread für die Multiplikation verantwortlich ist. Die Ergebnisse werden in zwei weitere Arrays \texttt{res\_sum[float]} und \texttt{res\_multi[float]} gesichert und nach der Berechnungsphase ausgegeben. 
 
 \subsection{Task-Beispiel: Fibonacci}
-\lstinputlisting[caption= Task-Beispiel: Fibonacci, label=taskExample]{../src/tasks/fib.c}
-Das gegebene Beispiel berechnet mit Hilfe von OpenMP-Tasks rekursiv die Fibunacci-Zahlenfolge für n-Zahlen mit einer gegebenen Anzahl Threads. Die Funktion \texttt{fib(int)} ist für die Berechnung verantwortlich. \\
+\lstinputlisting[caption= Task-Beispiel: Fibonacci, label=taskExample,language=C]{../src/tasks/fib.c}
+Das gegebene Beispiel berechnet mit Hilfe von OpenMP-Tasks rekursiv die Fibunacci-Zahlenfolge für n-Zahlen mit einer gegebenen Anzahl Threads. Die Funktion \texttt{fib(int)} ist für die Berechnung verantwortlich.
+
 Im Quelltext des Beispiels soll die Fibunacci-Zahlenfolge für n = 7 berechnet werden. Für n > 2 kann nun die vorherige Zahl (n -1) und die vorvorherige Zahl (n - 2) berechnet werden. Das Ergebnis ist die Summe aus den beiden Teilergebnissen i und j, welches zurückgegeben wird. Zu beachten ist, dass \textit{i} und \textit{j} im gesamten Adressraum zu Verfügung stehen und jeder Task sein eigenes \textit{n} verwendet. Für jedes n > 2 erzeugt der Algorithmus nun zwei weitere Berechnungen bis n = 2 erreicht wird, da für 1 und 2 keine Berechnungen erforderlich sind und damit auch das Abbruchkriterium der Rekursion darstellt.  
 
 \end{document}
