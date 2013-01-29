@@ -1,11 +1,7 @@
 PLATFORM := $(shell uname)
 PWD := $(shell pwd)
 OMP := -fopenmp
-SINGLE := 1
 
-ifdef SINGLE
-	$(OMP) := -fopenmp
-endif
 all: prepare helloworld envvars sections tasks
 
 helloworld: prepare
