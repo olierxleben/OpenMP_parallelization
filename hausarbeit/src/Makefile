@@ -6,7 +6,7 @@ SINGLE := 1
 ifdef SINGLE
 	$(OMP) := -fopenmp
 endif
-all: prepare helloworld envvars sections
+all: prepare helloworld envvars sections tasks
 
 helloworld: prepare
 	gcc -c $(OMP) helloworld/hello_world.c -o build/helloworld
@@ -26,6 +26,11 @@ sections: prepare
 prepare:
 	@echo start building...
 	
+tasks: prepare
+	gcc -c $(OMP) tasks/fib.c -o build/tasks
+	
+	@echo finished building sections
+
 clean: 
 	rm -rf hello_world/helloworld.o 
 	rm -rf sections/sections.o
